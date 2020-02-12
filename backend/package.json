@@ -9,7 +9,10 @@
     "queue": "nodemon src/queue.js",
     "dev:debug": "nodemon --inspect src/server.js",
     "migrate": "sequelize db:migrate",
-    "seed": "sequelize db:seed:all"
+    "seed": "sequelize db:seed:all",
+    "pretest": "NODE_ENV=test sequelize db:migrate",
+    "test": "NODE_ENV=test jest",
+    "posttest": "NODE_ENV=test sequelize db:migrate:undo:all"
   },
   "dependencies": {
     "@sentry/node": "^5.12.3",
@@ -21,12 +24,15 @@
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.8.11",
     "multer": "^1.4.2",
+    "pg-hstore": "^2.3.3",
     "sentry": "^0.1.2",
     "sequelize": "^5.21.4",
     "youch": "^2.0.10",
     "yup": "^0.28.1"
   },
   "devDependencies": {
+    "@sucrase/jest-plugin": "^2.0.0",
+    "@types/jest": "^25.1.2",
     "babel-eslint": "^10.0.3",
     "babel-plugin-root-import": "^6.4.1",
     "eslint": "^6.8.0",
@@ -34,11 +40,17 @@
     "eslint-config-prettier": "^6.10.0",
     "eslint-import-resolver-babel-plugin-root-import": "^1.1.1",
     "eslint-plugin-import": "^2.20.1",
+    "eslint-plugin-jest": "^23.7.0",
     "eslint-plugin-prettier": "^3.1.2",
+    "factory-girl": "^5.0.4",
+    "faker": "^4.1.0",
+    "jest": "^25.1.0",
     "nodemon": "^2.0.2",
     "pg": "^7.18.1",
     "prettier": "^1.19.1",
     "sequelize-cli": "^5.5.1",
-    "sucrase": "^3.12.1"
+    "sqlite3": "^4.1.1",
+    "sucrase": "^3.12.1",
+    "supertest": "^4.0.2"
   }
 }

@@ -6,7 +6,13 @@ export default async(req, res, next) => {
       email: Yup.string()
         .email()
         .required(),
-      password: Yup.string().required(),
+      name: Yup.string()
+        .min(3)
+        .required(),
+      password: Yup
+        .string()
+        .min(8)
+        .required(),
     });
 
     await schema.validate(req.body, { abortEarly: false });
