@@ -19,6 +19,6 @@ routes.use(authMiddleware);
 routes.post('/user', userStoreValidator, UserController.store);
 
 routes.post('/recipient', recipientStoreValidator, RecipientController.store);
-routes.put('/recipient/:cpf', recipientStoreValidator, RecipientController.update);
+routes.put('/recipient/:cpf', RecipientController.update);
 
 export default routes;

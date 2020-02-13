@@ -26,10 +26,14 @@ class RecipientController {
   async update(req, res) {
     const { cpf } = req.params;
 
+    if (!cpf) {
+      return res.status(400).json({ error: 'CPF is required' });
+    }
+
     const recipient = await Recipient.findOne({ where : { cpf }});
 
     if (!recipient) {
-      return res.status(400).json({error: 'Recipient not found!'})
+      return res.status(400).json({ error: 'Recipient not found!' })
     };
 
     const { name, number, street, state, city, postal_code } = await recipient.update(req.body);
