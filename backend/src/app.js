@@ -2,6 +2,7 @@ import 'dotenv/config';
 import express from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
+import path from 'path';
 import * as Sentry from '@sentry/node';
 import Youch from 'youch';
 import sentryConfig from './config/sentry';
@@ -27,6 +28,10 @@ class App {
     this.server.use(cors());
     this.server.use(helmet());
     this.server.use(express.json());
+    this.server.use(
+      '/files',
+      express.static(path.resolve(__dirname, '..', 'temp', 'uploads'))
+    );
   }
 
   routes() {
