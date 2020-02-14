@@ -1,5 +1,5 @@
 import { Op } from 'sequelize';
-
+import { isBefore, parseISO } from 'date-fns';
 import Order from '../models/Order';
 import File from '../models/File';
 
@@ -22,7 +22,7 @@ class DeliveryController {
     return res.json(orders);
   }
 
-  async deliveries(req, res) {
+  async index(req, res) {
     const { id } = req.params;
 
     if (!id) {
@@ -42,40 +42,81 @@ class DeliveryController {
     return res.json(orders);
   }
 
-  async update(req, res) {
+  async startOrder(req, res) {
     const { id, deliveryman_id } = req.params;
-    const { start_date, end_date } = req.body;
-    const { originalname: name, filename: path } = req.file;
+    const { start_date } = req.body;
+
+    if (!start_date) {
+      return res.status(400).json({ error: 'start_date is required!'});
+    };
 
     const orders = await Order.findAll({ where: { deliveryman_id }});
 
+    if (!orders) {
+      return res.status(404).json({ error: 'Deliveryman does not has delivery to start!'})
+    };
+
+    const order = orders.filter(_order => _order.id === Number(id))[0];
+
+    if (order.start_date) {
+      return res.status(400).json({ error: 'Delivery is already in progress!'});
+    };
+
     const firstHourToday = new Date().setHours(0, 0, 0, 0)
 
-    const totalOrdersDeliveredToday = orders.filter(order =>
-      order.start_date >= firstHourToday && order.end_date).length;
+    const totalOrdersDeliveredToday = orders.filter(filter =>
+      filter.start_date >= firstHourToday && filter.end_date).length;
 
     if (totalOrdersDeliveredToday > 5) {
       return res.status(400).json({ error: '5 Deliveries day limit hit'})
     };
 
-    const order = orders.filter(_order => _order.id === id);
+    await Order.update({ start_date }, { where: { id } });
 
-    if (!order.start_date && end_date) {
-      return res.status(400).json({ error: 'Delivery is not started'});
+    return res.json(order);
+  }
+
+  async finishOrder(req, res) {
+    const { id, deliveryman_id } = req.params;
+    const { end_date } = req.query;
+    const { originalname: name, filename: path } = req.file;
+
+    let order = await Order.findOne({ where: { id }});
+
+    if (order.deliveryman_id !== Number(deliveryman_id)) {
+      return res.status(400).json({ error: 'This delivery belongs to other deliveryman!'});
+    }
+
+    if (!order) {
+      return res.status(400).json({ error: 'Delivery not found!'});
     };
 
-    const { fileId } = await File.create({
+    if (!order.start_date) {
+      return res.status(400).json({ error: 'Delivery has not started!'})
+    };
+
+    if(isBefore(parseISO(end_date), order.start_date)) {
+      return res.status(400).json({ error: 'end_date must be greather than start_date'});
+    };
+
+    if (order.end_date) {
+      return res.status(400).json({ error: 'Delivery has delivered!'});
+    };
+
+    const { id: fileId } = await File.create({
       name,
       path
     });
 
-    await order.update({
-      start_date,
-      end_date,
-      signature_id: fileId
-    });
+    order = await Order.update({ end_date, signature_id: fileId }, { where: { id } });
 
-    return res.status(200);
+    return res.json({
+      data: order,
+      file: {
+        name,
+        path
+      }
+    });
   }
 }
 

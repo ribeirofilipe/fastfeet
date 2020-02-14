@@ -45,6 +45,8 @@ routes.get('/orders', OrderController.index);
 routes.delete('/order/:id', OrderController.destroy);
 
 routes.get('/deliveryman/:id', DeliveryController.show);
-routes.get('/deliveryman/:id/deliveries', DeliveryController.deliveries);
+routes.get('/deliveryman/:id/deliveries', DeliveryController.index);
+routes.put('/deliveryman/:deliveryman_id/start-delivery/:id', DeliveryController.startOrder);
+routes.put('/deliveryman/:deliveryman_id/finish-delivery/:id', upload.single('file'), DeliveryController.finishOrder);
 
 export default routes;
