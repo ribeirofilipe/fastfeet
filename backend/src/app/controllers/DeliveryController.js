@@ -59,7 +59,7 @@ class DeliveryController {
     const order = orders.filter(_order => _order.id === Number(id))[0];
 
     if (order.start_date) {
-      return res.status(400).json({ error: 'Delivery is already in progress!'});
+      return res.status(400).json({ error: 'Order is already in progress!'});
     };
 
     const firstHourToday = new Date().setHours(0, 0, 0, 0)
@@ -68,7 +68,7 @@ class DeliveryController {
       filter.start_date >= firstHourToday && filter.end_date).length;
 
     if (totalOrdersDeliveredToday > 5) {
-      return res.status(400).json({ error: '5 Deliveries day limit hit'})
+      return res.status(400).json({ error: '5 Orders day limit hit'})
     };
 
     await Order.update({ start_date }, { where: { id } });
@@ -84,15 +84,15 @@ class DeliveryController {
     let order = await Order.findOne({ where: { id }});
 
     if (order.deliveryman_id !== Number(deliveryman_id)) {
-      return res.status(400).json({ error: 'This delivery belongs to other deliveryman!'});
+      return res.status(400).json({ error: 'This order belongs to other deliveryman!'});
     }
 
     if (!order) {
-      return res.status(400).json({ error: 'Delivery not found!'});
+      return res.status(400).json({ error: 'Order not found!'});
     };
 
     if (!order.start_date) {
-      return res.status(400).json({ error: 'Delivery has not started!'})
+      return res.status(400).json({ error: 'Order has not started!'})
     };
 
     if(isBefore(parseISO(end_date), order.start_date)) {
@@ -100,7 +100,7 @@ class DeliveryController {
     };
 
     if (order.end_date) {
-      return res.status(400).json({ error: 'Delivery has delivered!'});
+      return res.status(400).json({ error: 'Order has delivered!'});
     };
 
     const { id: fileId } = await File.create({
