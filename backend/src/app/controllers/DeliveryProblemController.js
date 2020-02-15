@@ -1,5 +1,9 @@
 import DeliveryProblem from '../models/DeliveryProblem';
+import Queue from '../../lib/Queue';
 import Order from '../models/Order';
+import Deliveryman from '../models/Deliveryman';
+import Recipient from '../models/Recipient';
+import CancellationMail from '../jobs/CancellationMail';
 
 class DeliveryProblemController {
   async index(req, res) {
@@ -43,19 +47,36 @@ class DeliveryProblemController {
   }
 
   async destroy(req, res) {
-    const { id: order_id } = req.params;
+    const { id } = req.params;
 
-    const order = await Order.findOne({ where: { id: order_id }});
+    const order = await Order.findOne({ where: { id },
+      include: [
+        {
+          model: Deliveryman,
+          as: 'deliveryman',
+          attributes: ['name', 'email'],
+        },
+        {
+          model: Recipient,
+          as: 'recipient',
+          attributes: ['name']
+        }
+      ],
+    });
 
     if (!order) {
       return res.status(404).json({ error: 'Order not found!'})
     };
 
-    order.canceled_at = new Date();
+    const canceled_at = new Date();
 
-    await order.update(order);
+    await order.update({ canceled_at });
 
-    return res.status(200);
+    await Queue.add(CancellationMail.key, {
+      order,
+    });
+
+    return res.sendStatus(200);
   }
 }
 
