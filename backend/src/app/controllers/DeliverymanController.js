@@ -1,3 +1,4 @@
+import { Op } from 'sequelize';
 import Deliveryman from '../models/Deliveryman';
 import File from '../models/File';
 
@@ -46,7 +47,16 @@ class DeliverymanController {
   }
 
   async index(req, res) {
+    const { name } = req.query;
+
+    const query = name ? {
+      name : {
+        [Op.startsWith]: name
+      }
+    } : null;
+
     const deliverymans = await Deliveryman.findAll({
+      where: query,
       include: [
         {
           model: File,

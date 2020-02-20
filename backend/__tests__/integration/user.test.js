@@ -5,12 +5,6 @@ import app from '../../src/app';
 import truncate from '../utils/truncate';
 import factory from '../utils/factories';
 
-jest.mock('../../src/app/middlewares/auth', () => {
-  return jest.fn((req, res, next) => {
-    return next()
-  });
-});
-
 describe('User', () => {
   beforeEach(async () => {
     await truncate();

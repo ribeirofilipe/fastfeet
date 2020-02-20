@@ -1,3 +1,4 @@
+import { Op } from 'sequelize';
 import Recipient from '../models/Recipient';
 
 class RecipientController {
@@ -47,6 +48,22 @@ class RecipientController {
       city,
       postal_code
     });
+  }
+
+  async index(req, res) {
+    const { name } = req.query;
+
+    const query = name ? {
+      name : {
+        [Op.startsWith]: name
+      }
+    } : null;
+
+    const recipients = await Recipient.findAll({
+      where: query,
+    });
+
+    return res.json(recipients);
   }
 }
 

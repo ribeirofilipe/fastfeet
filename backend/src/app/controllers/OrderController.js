@@ -2,9 +2,20 @@ import Order from '../models/Order';
 import File from '../models/File';
 import Deliveryman from '../models/Deliveryman';
 import Recipient from '../models/Recipient';
+import DeliveryProblem from '../models/DeliveryProblem';
 
 class OrderController {
   async store(req, res) {
+    const { deliveryman_id, recipient_id } = req.body;
+
+    const deliveryman = await Deliveryman.findOne({ where : { id: deliveryman_id }});
+
+    if (!deliveryman) return res.json({ error: 'Deliveryman not found.'});
+
+    const recipient = await Recipient.findOne({ where : { id: recipient_id }});
+
+    if (!recipient) return res.json({ error: 'Recipient not found.'});
+
     const order = await Order.create(req.body);
 
     return res.json(order);

@@ -4,7 +4,24 @@ import Order from '../models/Order';
 import File from '../models/File';
 
 class DeliveryController {
-  async show(req, res) {
+  async index(req, res) {
+    const { product } = req.query;
+
+    const query = product ?
+    {
+        product : {
+          [Op.startsWith]: product
+        }
+    } : null;
+
+    const orders = await Order.findAll({
+      where: query,
+    });
+
+    return res.json(orders);
+  }
+
+  async deliveries(req, res) {
     const { id } = req.params;
 
     if (!id) {
@@ -22,7 +39,7 @@ class DeliveryController {
     return res.json(orders);
   }
 
-  async index(req, res) {
+  async deliveried(req, res) {
     const { id } = req.params;
 
     if (!id) {
