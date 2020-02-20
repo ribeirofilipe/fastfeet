@@ -32,8 +32,7 @@ module.exports = {
     "react-hooks/rules-of-hooks": "error",
     "react-hooks/exhaustive-deps": "warn",
     "react/jsx-props-no-spreading": "off",
-    "react-native/no-raw-text": "off",
-
+    "react-native/no-raw-text": "off"
   },
   settings: {
     "import/resolver": {

@@ -5,7 +5,7 @@ import Route from './Route';
 export default function Routes() {
   return (
     <Switch>
-      <Route path="/" component={() => <h1>404 NOT FOUND</h1>} />
+      <Route path="/" component={() => <h1>GOOD HACK!</h1>} />
     </Switch>
   );
 }
