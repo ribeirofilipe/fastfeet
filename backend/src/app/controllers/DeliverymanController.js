@@ -51,7 +51,7 @@ class DeliverymanController {
 
     const query = name ? {
       name : {
-        [Op.startsWith]: name
+        [Op.iLike]: `${name}%`,
       }
     } : null;
 

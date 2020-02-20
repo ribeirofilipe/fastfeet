@@ -10,7 +10,7 @@ class DeliveryController {
     const query = product ?
     {
         product : {
-          [Op.startsWith]: product
+          [Op.iLike]: `${product}%`,
         }
     } : null;
 
