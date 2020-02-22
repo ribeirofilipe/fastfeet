@@ -17,6 +17,17 @@ export default function auth(state = INITIAL_STATE, action) {
         draft.products = action.payload.products;
         break;
       }
+      case '@deliery/DELETE_REQUEST': {
+        draft.loading = true;
+        break;
+      }
+      case '@delivery/DELETE_SUCCESS': {
+        draft.loading = false;
+        draft.products = draft.products.filter(
+          product => product.id !== action.payload.id
+        );
+        break;
+      }
       default:
     }
   });

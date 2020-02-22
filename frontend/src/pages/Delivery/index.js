@@ -4,6 +4,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import { FaPlus, FaEllipsisH, FaEye } from 'react-icons/fa';
 import { MdEdit, MdDeleteForever } from 'react-icons/md';
 import { Table, Items } from '~/components/Table/styles';
+import { Modal } from '~/components/Modal/Action/styles';
+import Confirmation from '~/components/Modal/Confirmation';
 
 import {
   Canceled,
@@ -11,14 +13,22 @@ import {
   Withdrawal,
   Pending,
   ActionItem,
-  Modal,
+  Visualization,
+  Edit,
+  Delete,
+  EmptyList,
 } from './styles';
 
-import { getDeliveriesRequest } from '~/store/modules/delivery/actions';
+import {
+  getDeliveriesRequest,
+  deleteDeliverieRequest,
+} from '~/store/modules/delivery/actions';
 
 export default function Delivery() {
   const dispatch = useDispatch();
   const [selectedId, setSelectedId] = useState(0);
+  const [isVisible, setIsVisible] = useState(false);
+  const [productId, setProductId] = useState(0);
 
   useEffect(() => {
     dispatch(getDeliveriesRequest());
@@ -28,6 +38,16 @@ export default function Delivery() {
 
   function handleGetProducts(e) {
     dispatch(getDeliveriesRequest(e));
+  }
+
+  function handleDeleteProduct() {
+    setIsVisible(!isVisible);
+    dispatch(deleteDeliverieRequest(productId));
+  }
+
+  function handleOpenDialog(id) {
+    setProductId(id);
+    setIsVisible(!isVisible);
   }
 
   function setModalVisible(id) {
@@ -84,6 +104,11 @@ export default function Delivery() {
         </button>
       </div>
 
+      <Confirmation
+        isVisible={isVisible}
+        handleExecute={() => handleDeleteProduct(productId)}
+      />
+
       <Items>
         <thead>
           <tr>
@@ -97,53 +122,59 @@ export default function Delivery() {
           </tr>
         </thead>
         <tbody>
-          {products.map(product => (
-            <tr key={product.id}>
-              <td># {product.id}</td>
-              <td>{product.recipient.name}</td>
-              <td>
-                <span>
-                  <img
-                    src="https://api.adorable.io/avatars/54/abott@adorable.pngCopy to Clipboard"
-                    alt="avatar"
-                  ></img>
-                  {product.deliveryman.name}
-                </span>
-              </td>
-              <td>{product.recipient.city}</td>
-              <td>{product.recipient.state}</td>
-              <td>{handleGetStatus(product)}</td>
-              <td>
-                <ActionItem onClick={() => setModalVisible(product.id)}>
-                  <FaEllipsisH />
-                  <Modal
-                    style={{
-                      display: product.id === selectedId ? 'block' : 'none',
-                    }}
-                  >
-                    <div>
-                      <span>
-                        <FaEye />
-                      </span>
-                      <p>Visualizar</p>
-                    </div>
-                    <div>
-                      <span>
-                        <MdEdit />
-                      </span>
-                      <p>Editar</p>
-                    </div>
-                    <div>
-                      <span>
-                        <MdDeleteForever />
-                      </span>
-                      <p>Deletar</p>
-                    </div>
-                  </Modal>
-                </ActionItem>
-              </td>
-            </tr>
-          ))}
+          {products.length > 0 ? (
+            products.map(product => (
+              <tr key={product.id}>
+                <td># {product.id}</td>
+                <td>{product.recipient.name}</td>
+                <td>
+                  <span>
+                    <img
+                      src="https://api.adorable.io/avatars/54/abott@adorable.pngCopy to Clipboard"
+                      alt="avatar"
+                    ></img>
+                    {product.deliveryman.name}
+                  </span>
+                </td>
+                <td>{product.recipient.city}</td>
+                <td>{product.recipient.state}</td>
+                <td>{handleGetStatus(product)}</td>
+                <td>
+                  <ActionItem onClick={() => setModalVisible(product.id)}>
+                    <FaEllipsisH />
+                    <Modal
+                      style={{
+                        display: product.id === selectedId ? 'block' : 'none',
+                      }}
+                    >
+                      <div>
+                        <Visualization>
+                          <FaEye />
+                        </Visualization>
+                        <p>Visualizar</p>
+                      </div>
+                      <div>
+                        <Edit>
+                          <MdEdit />
+                        </Edit>
+                        <p>Editar</p>
+                      </div>
+                      <div onClick={() => handleOpenDialog(product.id)}>
+                        <Delete>
+                          <MdDeleteForever />
+                        </Delete>
+                        <p>Deletar</p>
+                      </div>
+                    </Modal>
+                  </ActionItem>
+                </td>
+              </tr>
+            ))
+          ) : (
+            <EmptyList>
+              <p>Nenhum item encontrado.</p>
+            </EmptyList>
+          )}
         </tbody>
       </Items>
     </Table>

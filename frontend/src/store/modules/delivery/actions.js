@@ -11,3 +11,17 @@ export function getDeliveriesSuccess(products) {
     payload: { products },
   };
 }
+
+export function deleteDeliverieRequest(id) {
+  return {
+    type: '@delivery/DELETE_REQUEST',
+    payload: { id },
+  };
+}
+
+export function deleteDeliverieSuccess(id) {
+  return {
+    type: '@delivery/DELETE_SUCCESS',
+    payload: { id },
+  };
+}
