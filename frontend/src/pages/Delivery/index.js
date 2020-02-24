@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { FaPlus, FaEllipsisH, FaEye } from 'react-icons/fa';
-import { MdEdit, MdDeleteForever } from 'react-icons/md';
+import { MdEdit, MdDeleteForever, MdSearch } from 'react-icons/md';
 import { Table, Items } from '~/components/Table/styles';
 import { Modal } from '~/components/Modal/Action/styles';
 import Confirmation from '~/components/Modal/Confirmation';
@@ -41,13 +41,12 @@ export default function Delivery() {
   }
 
   function handleDeleteProduct() {
-    setIsVisible(!isVisible);
     dispatch(deleteDeliverieRequest(productId));
   }
 
   function handleOpenDialog(id) {
     setProductId(id);
-    setIsVisible(!isVisible);
+    setIsVisible(true);
   }
 
   function setModalVisible(id) {
@@ -96,6 +95,7 @@ export default function Delivery() {
           onChange={e => handleGetProducts(e.target.value)}
           placeholder="Buscar por encomendas"
         ></input>
+
         <button type="button">
           <span>
             <FaPlus />
@@ -107,6 +107,7 @@ export default function Delivery() {
       <Confirmation
         isVisible={isVisible}
         handleExecute={() => handleDeleteProduct(productId)}
+        handleSetVisible={setIsVisible}
       />
 
       <Items>

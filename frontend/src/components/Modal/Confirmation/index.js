@@ -1,28 +1,32 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 
 import { Container, Dialog } from './styles';
 
-export default function Confirmation({ handleExecute, isVisible }) {
-  const [visible, setVisible] = useState(true);
-
+export default function Confirmation({
+  handleExecute,
+  handleSetVisible,
+  isVisible,
+}) {
   return (
     <Container
       style={{
-        display: (isVisible && visible) || isVisible ? 'block' : 'none',
+        display: isVisible ? 'flex' : 'none',
       }}
     >
       <Dialog>
         <span>Tem certeza?</span>
-        <button
-          onClick={() => {
-            handleExecute();
-            setVisible(isVisible);
-          }}
-        >
-          Sim
-        </button>
-        <button onClick={() => setVisible(!visible)}>Nao</button>
+        <div>
+          <button
+            onClick={() => {
+              handleExecute();
+              handleSetVisible(!isVisible);
+            }}
+          >
+            SIM
+          </button>
+          <button onClick={() => handleSetVisible(!isVisible)}>NÃO</button>
+        </div>
       </Dialog>
     </Container>
   );
@@ -30,5 +34,6 @@ export default function Confirmation({ handleExecute, isVisible }) {
 
 Confirmation.propTypes = {
   handleExecute: PropTypes.func,
+  handleSetVisible: PropTypes.func,
   isVisible: PropTypes.bool,
 };
