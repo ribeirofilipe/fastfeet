@@ -8,7 +8,7 @@ export const Container = styled.div`
 `;
 
 export const Dialog = styled.div`
-  border: 1px solid #666666;
+  border: 1px solid #ddd;
   background: #eee;
   border-radius: 7px;
   padding: 50px;
@@ -25,7 +25,7 @@ export const Dialog = styled.div`
   div {
     button {
       margin-right: 10px;
-      border-radius: 9px;
+      border-radius: 5px;
     }
   }
 `;

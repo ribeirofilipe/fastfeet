@@ -14,6 +14,31 @@ export const Content = styled.div`
 
   img {
     width: 10%;
+    padding-right: 30px;
+    margin-right: 30px;
+    border-right: 1px solid #dddddd;
+  }
+
+  nav {
+    width: 100%;
+
+    ul {
+      display: flex;
+      justify-content: flex-start;
+
+      li {
+        margin-right: 20px;
+        color: #999999;
+        font-weight: bold;
+        font-size: 15px;
+        cursor: pointer;
+        transition: 0.3s;
+
+        :hover {
+          color: #444444;
+        }
+      }
+    }
   }
 
   aside {

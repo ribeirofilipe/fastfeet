@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { FaPlus, FaEllipsisH, FaEye } from 'react-icons/fa';
-import { MdEdit, MdDeleteForever, MdSearch } from 'react-icons/md';
+import { MdEdit, MdDeleteForever } from 'react-icons/md';
 import { Table, Items } from '~/components/Table/styles';
 import { Modal } from '~/components/Modal/Action/styles';
 import Confirmation from '~/components/Modal/Confirmation';
@@ -49,7 +49,7 @@ export default function Delivery() {
     setIsVisible(true);
   }
 
-  function setModalVisible(id) {
+  function handleOpenModal(id) {
     if (id === selectedId) {
       setSelectedId(0);
     } else {
@@ -141,7 +141,7 @@ export default function Delivery() {
                 <td>{product.recipient.state}</td>
                 <td>{handleGetStatus(product)}</td>
                 <td>
-                  <ActionItem onClick={() => setModalVisible(product.id)}>
+                  <ActionItem onClick={() => handleOpenModal(product.id)}>
                     <FaEllipsisH />
                     <Modal
                       style={{

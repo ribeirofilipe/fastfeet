@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import search from '../../assets/search.svg';
 
 export const Table = styled.div`
   max-width: 1600px;
@@ -19,10 +20,11 @@ export const Table = styled.div`
     input {
       width: 20%;
       border: 1px solid #dddddd;
-      padding: 10px;
+      padding: 10px 0 7px 40px;
       margin: 20px 0 20px 0;
       font-size: 15px;
       border-radius: 4px;
+      background: #fff url(${search}) no-repeat 120%;
     }
 
     button {
