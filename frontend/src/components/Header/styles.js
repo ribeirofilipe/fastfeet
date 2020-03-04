@@ -26,7 +26,7 @@ export const Content = styled.div`
       display: flex;
       justify-content: flex-start;
 
-      li {
+      a {
         margin-right: 20px;
         color: #999999;
         font-weight: bold;
@@ -35,7 +35,7 @@ export const Content = styled.div`
         transition: 0.3s;
 
         :hover {
-          color: #444444;
+          color: #444444 !important;
         }
       }
     }

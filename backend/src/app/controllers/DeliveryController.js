@@ -2,6 +2,8 @@ import { Op } from 'sequelize';
 import { isBefore, parseISO } from 'date-fns';
 import Order from '../models/Order';
 import File from '../models/File';
+import Recipient from '../models/Recipient';
+import Deliveryman from '../models/Deliveryman';
 
 class DeliveryController {
   async index(req, res) {
@@ -16,6 +18,16 @@ class DeliveryController {
 
     const orders = await Order.findAll({
       where: query,
+      include: [{
+        model: Deliveryman,
+        as: 'deliveryman',
+        attributes: ['name'],
+      },
+      {
+        model: Recipient,
+        as: 'recipient',
+        attributes: ['name', 'state', 'city'],
+      }]
     });
 
     return res.json(orders);
@@ -33,7 +45,7 @@ class DeliveryController {
         deliveryman_id: id,
         end_date: null,
         canceled_at: null
-      }
+      },
     });
 
     return res.json(orders);
@@ -134,6 +146,24 @@ class DeliveryController {
         path
       }
     });
+  }
+
+  async destroy(req, res) {
+    const { id } = req.params;
+
+    if (!id) {
+      return res.status(400).json({ error: 'ID is required'});
+    }
+
+    const order = await Order.findOne({ where: { id }});
+
+    if (!order) {
+      return res.status(400).json({ error: 'Order not found.'});
+    };
+
+    await Order.destroy({ where: { id }});
+
+    return res.sendStatus(204);
   }
 }
 

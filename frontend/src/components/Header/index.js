@@ -15,38 +15,42 @@ export default function Header() {
 
         <nav>
           <ul>
-            <li
+            <Link
+              to="delivery"
               style={{
                 color: selectedMenu === 'delivery' ? '#444444' : '#999999',
               }}
               onClick={() => setSelectedMenu('delivery')}
             >
               ENCOMENDAS
-            </li>
-            <li
+            </Link>
+            <Link
+              to="deliveryman"
               style={{
                 color: selectedMenu === 'deliveryman' ? '#444444' : '#999999',
               }}
               onClick={() => setSelectedMenu('deliveryman')}
             >
               ENTREGADORES
-            </li>
-            <li
+            </Link>
+            <Link
+              to=""
               style={{
                 color: selectedMenu === 'recipient' ? '#444444' : '#999999',
               }}
               onClick={() => setSelectedMenu('recipient')}
             >
               DESTINATÁRIOS
-            </li>
-            <li
+            </Link>
+            <Link
+              to=""
               style={{
                 color: selectedMenu === 'problem' ? '#444444' : '#999999',
               }}
               onClick={() => setSelectedMenu('problem')}
             >
               PROBLEMAS
-            </li>
+            </Link>
           </ul>
         </nav>
 

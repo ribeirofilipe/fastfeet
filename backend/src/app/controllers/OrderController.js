@@ -2,7 +2,6 @@ import Order from '../models/Order';
 import File from '../models/File';
 import Deliveryman from '../models/Deliveryman';
 import Recipient from '../models/Recipient';
-import DeliveryProblem from '../models/DeliveryProblem';
 
 class OrderController {
   async store(req, res) {

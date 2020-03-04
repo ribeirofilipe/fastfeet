@@ -72,6 +72,9 @@ class DeliverymanController {
   async destroy(req, res) {
     const { email } = req.params;
 
+    console.log(email);
+
+
     if (!email) {
       return res.status(400).json({ error: 'email is required'});
     }
