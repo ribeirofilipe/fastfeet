@@ -1,5 +1,6 @@
 import { Op } from 'sequelize';
 import Recipient from '../models/Recipient';
+import File from '../models/File';
 
 class RecipientController {
   async store(req, res) {
@@ -61,6 +62,13 @@ class RecipientController {
 
     const recipients = await Recipient.findAll({
       where: query,
+      include: [
+        {
+          model: File,
+          as: 'avatar',
+          attributes: ['name', 'path', 'url'],
+        },
+      ],
     });
 
     return res.json(recipients);

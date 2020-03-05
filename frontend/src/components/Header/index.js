@@ -34,7 +34,7 @@ export default function Header() {
               ENTREGADORES
             </Link>
             <Link
-              to=""
+              to="recipient"
               style={{
                 color: selectedMenu === 'recipient' ? '#444444' : '#999999',
               }}

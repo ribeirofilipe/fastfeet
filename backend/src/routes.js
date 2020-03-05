@@ -33,7 +33,7 @@ routes.post('/user', userStoreValidator, UserController.store);
 routes.post('/files', upload.single('file'), FileController.store);
 
 routes.post('/recipient', recipientStoreValidator, RecipientController.store);
-routes.get('/recipients', RecipientController.index);
+routes.post('/recipients', RecipientController.index);
 routes.put('/recipient/:cpf', RecipientController.update);
 
 routes.post('/deliveryman', DeliverymanStoreValidator, DeliverymanController.store);
