@@ -3,7 +3,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { FaPlus, FaEllipsisH } from 'react-icons/fa';
 import { MdEdit, MdDeleteForever } from 'react-icons/md';
 
-import { getRecipientRequest } from '~/store/modules/recipient/actions';
+import {
+  getRecipientRequest,
+  deleteRecipientRequest,
+} from '~/store/modules/recipient/actions';
 
 import { Table, Items } from '~/components/Table/styles';
 import { Modal } from '~/components/Modal/Action/styles';
@@ -12,9 +15,8 @@ import { EmptyList, Edit, Delete, ActionItem } from './styles';
 
 export default function Recipient() {
   const dispatch = useDispatch();
-  const [selectedRecipient, setSelectedRecipient] = useState(0);
   const [isVisible, setIsVisible] = useState(false);
-  const [recipientId, setRecipientId] = useState(0);
+  const [recipientId, setRecipientId] = useState('');
 
   const recipients = useSelector(state => state.recipient.recipients);
 
@@ -28,20 +30,25 @@ export default function Recipient() {
   }
 
   function handleOpenModal(id) {
-    if (id === recipientId) {
-      setRecipientId(0);
-    } else {
-      setRecipientId(id);
-    }
+    setRecipientId(id);
   }
 
-  function handleDeleteRecipient() {}
+  function handleDeleteRecipient(id) {
+    dispatch(deleteRecipientRequest(id));
+  }
+
+  function handleGetRecipient(name) {
+    dispatch(getRecipientRequest(name));
+  }
 
   return (
     <Table>
-      <span>Gerenciando encomendas</span>
+      <span>Gerenciando destinatários</span>
       <div>
-        <input placeholder="Buscar por encomendas"></input>
+        <input
+          onChange={e => handleGetRecipient(e.target.value)}
+          placeholder="Buscar por destinatário"
+        ></input>
 
         <button type="button">
           <span>
@@ -61,9 +68,8 @@ export default function Recipient() {
         <thead>
           <tr>
             <th>ID</th>
-            <th>Foto</th>
             <th>Nome</th>
-            <th>Email</th>
+            <th>Endereço</th>
             <th>Ações</th>
           </tr>
         </thead>
@@ -72,13 +78,11 @@ export default function Recipient() {
             recipients.map(recipient => (
               <tr key={recipient.id}>
                 <td># {recipient.id}</td>
+                <td>{recipient.name}</td>
                 <td>
-                  <span>
-                    <img src={recipient.id} />
-                  </span>
+                  {recipient.street} {recipient.number}, {recipient.city} -{' '}
+                  {recipient.state}
                 </td>
-                <td># {recipient.name}</td>
-                <td># {recipient.email}</td>
                 <td>
                   {' '}
                   <ActionItem onClick={() => handleOpenModal(recipient.id)}>

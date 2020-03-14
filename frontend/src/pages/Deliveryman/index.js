@@ -42,11 +42,18 @@ export default function Deliveryman() {
     dispatch(deleteDeliverymenRequest(email));
   }
 
+  function handleGetDeliverymen(name) {
+    dispatch(getDeliverymenRequest(name));
+  }
+
   return (
     <Table>
       <span>Gerenciando encomendas</span>
       <div>
-        <input placeholder="Buscar por encomendas"></input>
+        <input
+          onChange={e => handleGetDeliverymen(e.target.value)}
+          placeholder="Buscar por encomendas"
+        ></input>
 
         <button type="button">
           <span>
@@ -76,14 +83,14 @@ export default function Deliveryman() {
           {deliverymen.length > 0 ? (
             deliverymen.map(deliveryman => (
               <tr key={deliveryman.id}>
-                <td># {deliveryman.id}</td>
+                <td>{deliveryman.id}</td>
                 <td>
                   <span>
-                    <img src={deliveryman.avatar.url} />
+                    <img src={deliveryman.avatar.url} alt="avatar" />
                   </span>
                 </td>
-                <td># {deliveryman.name}</td>
-                <td># {deliveryman.email}</td>
+                <td>{deliveryman.name}</td>
+                <td>{deliveryman.email}</td>
                 <td>
                   {' '}
                   <ActionItem

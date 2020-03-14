@@ -14,8 +14,6 @@ export function* getRecipientRequest({ payload }) {
       `recipients${recipient ? `?name=${recipient}` : ''}`
     );
 
-    console.log(response.data);
-
     yield put(getRecipientSuccess(response.data));
   } catch (err) {
     toast.error('Error to get deliverymen.');

@@ -1,6 +1,5 @@
 import { Op } from 'sequelize';
 import Recipient from '../models/Recipient';
-import File from '../models/File';
 
 class RecipientController {
   async store(req, res) {
@@ -62,16 +61,27 @@ class RecipientController {
 
     const recipients = await Recipient.findAll({
       where: query,
-      include: [
-        {
-          model: File,
-          as: 'avatar',
-          attributes: ['name', 'path', 'url'],
-        },
-      ],
     });
 
     return res.json(recipients);
+  }
+
+  async destroy(req, res) {
+    const { id } = req.params;
+
+    if (!id) {
+      return res.status(400).json({ error: 'ID is required'});
+    }
+
+    const recipient = await Recipient.findOne({ where: { id }});
+
+    if (!recipient) {
+      return res.status(404).json({ error: 'Recipient not found.'});
+    };
+
+    await Recipient.destroy({ where: { id }});
+
+    return res.sendStatus(204);
   }
 }
 

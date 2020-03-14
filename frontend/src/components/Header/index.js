@@ -43,7 +43,7 @@ export default function Header() {
               DESTINATÁRIOS
             </Link>
             <Link
-              to=""
+              to="problem"
               style={{
                 color: selectedMenu === 'problem' ? '#444444' : '#999999',
               }}

@@ -6,6 +6,7 @@ import { MdEdit, MdDeleteForever } from 'react-icons/md';
 import { Table, Items } from '~/components/Table/styles';
 import { Modal } from '~/components/Modal/Action/styles';
 import Confirmation from '~/components/Modal/Confirmation';
+import Info from '~/components/Modal/Info';
 
 import {
   Canceled,
@@ -29,6 +30,7 @@ export default function Delivery() {
   const [selectedId, setSelectedId] = useState(0);
   const [isVisible, setIsVisible] = useState(false);
   const [productId, setProductId] = useState(0);
+  const [openModal, setOpenModal] = useState(false);
 
   useEffect(() => {
     dispatch(getDeliveriesRequest());
@@ -110,6 +112,8 @@ export default function Delivery() {
         handleSetVisible={setIsVisible}
       />
 
+      <Info handleOpenModal={() => setOpenModal}></Info>
+
       <Items>
         <thead>
           <tr>
@@ -127,18 +131,18 @@ export default function Delivery() {
             products.map(product => (
               <tr key={product.id}>
                 <td># {product.id}</td>
-                <td>{product.recipient.name}</td>
+                <td>{product.recipient && product.recipient.name}</td>
                 <td>
                   <span>
                     <img
                       src="https://api.adorable.io/avatars/54/abott@adorable.pngCopy to Clipboard"
                       alt="avatar"
                     ></img>
-                    {product.deliveryman.name}
+                    {product.deliveryman && product.deliveryman.name}
                   </span>
                 </td>
-                <td>{product.recipient.city}</td>
-                <td>{product.recipient.state}</td>
+                <td>{product.recipient && product.recipient.city}</td>
+                <td>{product.recipient && product.recipient.state}</td>
                 <td>{handleGetStatus(product)}</td>
                 <td>
                   <ActionItem onClick={() => handleOpenModal(product.id)}>
@@ -148,7 +152,7 @@ export default function Delivery() {
                         display: product.id === selectedId ? 'block' : 'none',
                       }}
                     >
-                      <div>
+                      <div onClick={() => handleOpenVisualization(true)}>
                         <Visualization>
                           <FaEye />
                         </Visualization>

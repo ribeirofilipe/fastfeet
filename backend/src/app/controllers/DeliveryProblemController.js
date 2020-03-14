@@ -1,3 +1,4 @@
+import { Op } from 'sequelize';
 import DeliveryProblem from '../models/DeliveryProblem';
 import Queue from '../../lib/Queue';
 import Order from '../models/Order';
@@ -7,7 +8,15 @@ import CancellationMail from '../jobs/CancellationMail';
 
 class DeliveryProblemController {
   async index(req, res) {
-    const deliveryProblems = await DeliveryProblem.findAll();
+    const deliveryProblems = await DeliveryProblem.findAll({
+      include: [{
+      model: Order,
+      as: 'order',
+      where: {
+        canceled_at: null
+      }
+    }]
+  })
 
     return res.json(deliveryProblems);
   }

@@ -35,6 +35,7 @@ routes.post('/files', upload.single('file'), FileController.store);
 routes.post('/recipient', recipientStoreValidator, RecipientController.store);
 routes.post('/recipients', RecipientController.index);
 routes.put('/recipient/:cpf', RecipientController.update);
+routes.delete('/recipient/:id', RecipientController.destroy);
 
 routes.post('/deliveryman', DeliverymanStoreValidator, DeliverymanController.store);
 routes.put('/deliveryman/:email', DeliverymanController.update);

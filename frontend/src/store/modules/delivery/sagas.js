@@ -27,7 +27,7 @@ export function* deleteDeliveryRequest({ payload }) {
 
     yield put(deleteDeliverieSuccess(id));
 
-    toast.success('Product deleted with success!');
+    toast.success('Product deleted with success');
   } catch (err) {
     toast.error('Error to get products.');
   }
