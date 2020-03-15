@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { FaPlus, FaEllipsisH } from 'react-icons/fa';
 import { MdEdit, MdDeleteForever } from 'react-icons/md';
 
@@ -50,12 +51,14 @@ export default function Recipient() {
           placeholder="Buscar por destinatário"
         ></input>
 
-        <button type="button">
-          <span>
-            <FaPlus />
-          </span>
-          <span>CADASTRAR</span>
-        </button>
+        <Link to="recipient-save">
+          <button type="button">
+            <span>
+              <FaPlus />
+            </span>
+            <span>CADASTRAR</span>
+          </button>
+        </Link>
       </div>
 
       <Confirmation

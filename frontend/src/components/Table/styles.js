@@ -30,7 +30,6 @@ export const Table = styled.div`
     button {
       display: flex;
       align-items: center;
-
       padding: 10px 20px 10px 20px;
       cursor: pointer;
       background: #7d40e7;
