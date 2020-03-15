@@ -26,7 +26,7 @@ class DeliveryController {
       {
         model: Recipient,
         as: 'recipient',
-        attributes: ['name', 'state', 'city'],
+        attributes: ['name', 'number', 'state', 'city', 'postal_code', 'street'],
       }]
     });
 

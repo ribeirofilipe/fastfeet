@@ -7,6 +7,7 @@ import { Table, Items } from '~/components/Table/styles';
 import { Modal } from '~/components/Modal/Action/styles';
 import Confirmation from '~/components/Modal/Confirmation';
 import Info from '~/components/Modal/Info';
+import ModalInfo from './Info';
 
 import {
   Canceled,
@@ -30,7 +31,8 @@ export default function Delivery() {
   const [selectedId, setSelectedId] = useState(0);
   const [isVisible, setIsVisible] = useState(false);
   const [productId, setProductId] = useState(0);
-  const [openModal, setOpenModal] = useState(false);
+  const [open, setOpen] = useState(false);
+  const [info, setInfo] = useState({});
 
   useEffect(() => {
     dispatch(getDeliveriesRequest());
@@ -57,6 +59,11 @@ export default function Delivery() {
     } else {
       setSelectedId(id);
     }
+  }
+
+  function handleOpenInfo(values) {
+    setInfo(values);
+    setOpen(true);
   }
 
   function handleGetStatus(product) {
@@ -105,14 +112,13 @@ export default function Delivery() {
           <span>CADASTRAR</span>
         </button>
       </div>
-
       <Confirmation
         isVisible={isVisible}
         handleExecute={() => handleDeleteProduct(productId)}
         handleSetVisible={setIsVisible}
       />
 
-      <Info handleOpenModal={() => setOpenModal}></Info>
+      <Info setOpen={setOpen} open={open} content={<ModalInfo info={info} />} />
 
       <Items>
         <thead>
@@ -152,7 +158,19 @@ export default function Delivery() {
                         display: product.id === selectedId ? 'block' : 'none',
                       }}
                     >
-                      <div onClick={() => handleOpenVisualization(true)}>
+                      <div
+                        onClick={() =>
+                          handleOpenInfo({
+                            street: product.recipient.street,
+                            city: product.recipient.city,
+                            postal_code: product.recipient.postal_code,
+                            number: product.recipient.number,
+                            state: product.recipient.state,
+                            delivered: product.start_date,
+                            withdrawal: product.end_date,
+                          })
+                        }
+                      >
                         <Visualization>
                           <FaEye />
                         </Visualization>

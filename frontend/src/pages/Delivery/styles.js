@@ -115,4 +115,21 @@ export const EmptyList = styled.div`
   }
 `;
 
-export const Dialog = styled.div``;
+export const ModalStyle = styled.div`
+  display: flex;
+  flex-direction: column;
+
+  div {
+    :first-child {
+      margin-top: 18px;
+    }
+
+    margin-bottom: 10px;
+  }
+
+  span {
+    font-size: 14px;
+    color: #444444;
+    font-weight: bold;
+  }
+`;
