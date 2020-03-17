@@ -12,6 +12,20 @@ export function getDeliverymenSuccess(deliverymen) {
   };
 }
 
+export function saveDeliverymenRequest(deliveryman) {
+  return {
+    type: '@deliveryman/SAVE_REQUEST',
+    payload: { deliveryman },
+  };
+}
+
+export function saveDeliverymenSuccess(deliveryman) {
+  return {
+    type: '@deliveryman/SAVE_SUCCESS',
+    payload: { deliveryman },
+  };
+}
+
 export function deleteDeliverymenRequest(email) {
   return {
     type: '@deliveryman/DELETE_REQUEST',

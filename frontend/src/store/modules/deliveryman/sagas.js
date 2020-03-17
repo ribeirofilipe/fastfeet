@@ -3,7 +3,11 @@ import { toast } from 'react-toastify';
 
 import api from '~/services/api';
 
-import { getDeliverymenSuccess, deleteDeliverymenSuccess } from './actions';
+import {
+  getDeliverymenSuccess,
+  saveDeliverymenSuccess,
+  deleteDeliverymenSuccess,
+} from './actions';
 
 export function* getDeliverymenRequest({ payload }) {
   try {
@@ -17,6 +21,21 @@ export function* getDeliverymenRequest({ payload }) {
     yield put(getDeliverymenSuccess(response.data));
   } catch (err) {
     toast.error('Error to get deliverymen.');
+  }
+}
+
+export function* saveDeliverymenRequest({ payload }) {
+  try {
+    const { data, name, email } = payload.deliveryman;
+
+    const response = yield call(api.post, 'deliveryman', data, {
+      name,
+      email,
+    });
+
+    yield put(saveDeliverymenSuccess(response.data));
+  } catch (err) {
+    toast.error('Error to save deliverymen.');
   }
 }
 
@@ -37,4 +56,5 @@ export function* deleteDeliverymenRequest({ payload }) {
 export default all([
   takeLatest('@deliveryman/GET_REQUEST', getDeliverymenRequest),
   takeLatest('@deliveryman/DELETE_REQUEST', deleteDeliverymenRequest),
+  takeLatest('@deliveryman/SAVE_REQUEST', saveDeliverymenRequest),
 ]);

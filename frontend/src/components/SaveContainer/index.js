@@ -6,7 +6,7 @@ import { IoIosArrowBack } from 'react-icons/io';
 
 import { Container } from './styles';
 
-export default function SaveContainer({ route, title }) {
+export default function SaveContainer({ route, title, action }) {
   return (
     <Container>
       <span>{title}</span>
@@ -15,7 +15,7 @@ export default function SaveContainer({ route, title }) {
           <IoIosArrowBack size={20} />
           <p>VOLTAR</p>
         </Link>
-        <button>
+        <button onClick={action}>
           <MdDone size={20} />
           <p>SALVAR</p>
         </button>
@@ -27,4 +27,5 @@ export default function SaveContainer({ route, title }) {
 SaveContainer.propTypes = {
   route: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
+  action: PropTypes.func.isRequired,
 };
