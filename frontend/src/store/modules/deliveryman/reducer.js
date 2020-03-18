@@ -2,6 +2,7 @@ import produce from 'immer';
 
 const INITIAL_STATE = {
   deliverymen: [],
+  deliveryman: null,
   loading: false,
 };
 
@@ -17,6 +18,15 @@ export default function deliveryman(state = INITIAL_STATE, action) {
         draft.deliverymen = action.payload.deliverymen;
         break;
       }
+      case '@deliveryman/GET_REQUEST_BY_ID': {
+        draft.loading = true;
+        break;
+      }
+      case '@deliveryman/GET_SUCCESS_BY_ID': {
+        draft.loading = false;
+        draft.deliveryman = action.payload.deliveryman;
+        break;
+      }
       case '@deliveryman/DELETE_REQUEST': {
         draft.loading = true;
         break;
@@ -26,6 +36,10 @@ export default function deliveryman(state = INITIAL_STATE, action) {
         draft.deliverymen = draft.deliverymen.filter(
           deliverymen => deliverymen.email !== action.payload.email
         );
+        break;
+      }
+      case '@deliveryman/CLEAN': {
+        draft.deliveryman = null;
         break;
       }
       default:

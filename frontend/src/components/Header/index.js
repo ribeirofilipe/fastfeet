@@ -16,7 +16,7 @@ export default function Header() {
         <nav>
           <ul>
             <Link
-              to="delivery"
+              to="/delivery"
               style={{
                 color: selectedMenu === 'delivery' ? '#444444' : '#999999',
               }}
@@ -25,7 +25,7 @@ export default function Header() {
               ENCOMENDAS
             </Link>
             <Link
-              to="deliveryman"
+              to="/deliveryman"
               style={{
                 color: selectedMenu === 'deliveryman' ? '#444444' : '#999999',
               }}
@@ -34,7 +34,7 @@ export default function Header() {
               ENTREGADORES
             </Link>
             <Link
-              to="recipient"
+              to="/recipient"
               style={{
                 color: selectedMenu === 'recipient' ? '#444444' : '#999999',
               }}
@@ -43,7 +43,7 @@ export default function Header() {
               DESTINATÁRIOS
             </Link>
             <Link
-              to="problem"
+              to="/problem"
               style={{
                 color: selectedMenu === 'problem' ? '#444444' : '#999999',
               }}

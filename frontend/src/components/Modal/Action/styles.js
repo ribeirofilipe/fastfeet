@@ -28,7 +28,8 @@ export const Modal = styled.div`
     border-bottom: 20px solid #fff;
   }
 
-  div {
+  div,
+  a {
     display: flex;
     justify-content: flex-start;
     align-items: center;

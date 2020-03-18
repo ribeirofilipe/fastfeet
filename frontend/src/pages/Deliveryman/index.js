@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 
 import { FaPlus, FaEllipsisH } from 'react-icons/fa';
 import { MdEdit, MdDeleteForever } from 'react-icons/md';
@@ -108,12 +108,17 @@ export default function Deliveryman() {
                             : 'none',
                       }}
                     >
-                      <div>
+                      <Link
+                        to={{
+                          pathname: 'deliveryman-save',
+                          state: deliveryman.id,
+                        }}
+                      >
                         <Edit>
                           <MdEdit />
                         </Edit>
                         <p>Editar</p>
-                      </div>
+                      </Link>
                       <div onClick={() => handleOpenDialog(deliveryman.email)}>
                         <Delete>
                           <MdDeleteForever />

@@ -40,6 +40,7 @@ routes.delete('/recipient/:id', RecipientController.destroy);
 routes.post('/deliveryman', DeliverymanStoreValidator, DeliverymanController.store);
 routes.put('/deliveryman/:email', DeliverymanController.update);
 routes.post('/deliverymen', DeliverymanController.index);
+routes.get('/deliveryman/:id', DeliverymanController.show);
 routes.delete('/deliveryman/:email', DeliverymanController.destroy);
 
 routes.post('/order', OrderStoreValidator, OrderController.store);

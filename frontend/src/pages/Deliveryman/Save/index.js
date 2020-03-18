@@ -1,45 +1,82 @@
-import React, { useMemo, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import React, { useMemo, useState, useEffect, useCallback } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+
+import PropTypes from 'prop-types';
 import { MdInsertPhoto } from 'react-icons/md';
 import SaveContainer from '~/components/SaveContainer';
 
 import { Form, Row, InputDiv, Input } from '~/components/Form/styles';
 import { LabelThumbnail, Photo } from './styles';
 
-import { saveDeliverymenRequest } from '~/store/modules/deliveryman/actions';
+import {
+  saveDeliverymenRequest,
+  getDeliverymanRequest,
+  updateDeliverymenRequest,
+} from '~/store/modules/deliveryman/actions';
+import { saveFileRequest } from '~/store/modules/file/actions';
 
-export default function DeliverymanSave() {
+export default function DeliverymanSave({ location }) {
   const dispatch = useDispatch();
 
   const [thumbnail, setThumbnail] = useState('');
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
+  const [url, setUrl] = useState('');
+
+  const id = location.state;
+
+  const deliveryman = useSelector(state => state.deliveryman.deliveryman);
+
+  useMemo(() => {
+    setName(deliveryman.name);
+    setEmail(deliveryman.email);
+    setUrl(deliveryman.avatar.url);
+  }, [deliveryman]);
+
+  useEffect(() => {
+    if (id) {
+      dispatch(getDeliverymanRequest(id));
+    } else {
+      setName('');
+      setEmail('');
+      setUrl('');
+    }
+
+    // eslint-disable-next-line
+  }, [id]);
 
   const preview = useMemo(() => {
     return thumbnail ? URL.createObjectURL(thumbnail) : null;
   }, [thumbnail]);
 
+  const avatar_id = useSelector(state => state.file.avatar_id);
+
   function handleSubmit() {
     const data = new FormData();
+    data.append('file', thumbnail);
 
-    data.append('thumbnail', thumbnail);
+    dispatch(saveFileRequest(data));
 
-    dispatch(saveDeliverymenRequest({ data, name, email }));
+    const obj = { name, email, avatar_id };
+
+    return id
+      ? dispatch(updateDeliverymenRequest(obj))
+      : dispatch(saveDeliverymenRequest(obj));
   }
 
   return (
     <>
       <SaveContainer
         action={() => handleSubmit()}
-        route={'deliveryman'}
+        route={'/deliveryman'}
         title={'Cadastro de entregadores'}
       />
       <Form>
         <Photo>
           <LabelThumbnail
             id="thumbnail"
-            style={{ backgroundImage: `url(${preview})` }}
-            thumbnail={thumbnail}
+            style={{ backgroundImage: `url(${preview || url})` }}
+            thumbnail={thumbnail || url}
           >
             <input
               type="file"
@@ -69,6 +106,7 @@ export default function DeliverymanSave() {
               value={email}
               onChange={e => setEmail(e.target.value)}
               type="text"
+              required
             />
           </InputDiv>
         </Row>
@@ -76,3 +114,7 @@ export default function DeliverymanSave() {
     </>
   );
 }
+
+DeliverymanSave.propTypes = {
+  location: PropTypes.object,
+};

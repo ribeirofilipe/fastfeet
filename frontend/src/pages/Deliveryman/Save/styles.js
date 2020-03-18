@@ -18,10 +18,10 @@ export const LabelThumbnail = styled.label`
   display: flex;
   justify-content: center;
   align-items: center;
-  border: ${props => (props.thumbnail ? 0 : '')};
+  border: ${props => (props.thumbnail || props.url ? 0 : '')};
 
   div {
-    display: ${props => (props.thumbnail ? 'none' : 'flex')};
+    display: ${props => (props.thumbnail || props.url ? 'none' : 'flex')};
     flex-direction: column;
     align-items: center;
     justify-content: center;
