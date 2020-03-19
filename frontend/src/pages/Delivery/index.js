@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-
+import { Link } from 'react-router-dom';
 import { FaPlus, FaEllipsisH, FaEye } from 'react-icons/fa';
 import { MdEdit, MdDeleteForever } from 'react-icons/md';
 import { Table, Items } from '~/components/Table/styles';
@@ -105,12 +105,14 @@ export default function Delivery() {
           placeholder="Buscar por encomendas"
         ></input>
 
-        <button type="button">
-          <span>
-            <FaPlus />
-          </span>
-          <span>CADASTRAR</span>
-        </button>
+        <Link to="delivery-save">
+          <button type="button">
+            <span>
+              <FaPlus />
+            </span>
+            <span>CADASTRAR</span>
+          </button>
+        </Link>
       </div>
       <Confirmation
         isVisible={isVisible}
@@ -176,12 +178,17 @@ export default function Delivery() {
                         </Visualization>
                         <p>Visualizar</p>
                       </div>
-                      <div>
+                      <Link
+                        to={{
+                          pathname: 'delivery-save',
+                          state: product.id,
+                        }}
+                      >
                         <Edit>
                           <MdEdit />
                         </Edit>
                         <p>Editar</p>
-                      </div>
+                      </Link>
                       <div onClick={() => handleOpenDialog(product.id)}>
                         <Delete>
                           <MdDeleteForever />

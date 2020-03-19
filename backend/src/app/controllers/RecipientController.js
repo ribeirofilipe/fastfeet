@@ -2,6 +2,18 @@ import { Op } from 'sequelize';
 import Recipient from '../models/Recipient';
 
 class RecipientController {
+  async show(req, res) {
+    const { cpf } = req.params;
+
+    const recipient = await Recipient.findOne({ where: { cpf }});
+
+    if (!recipient) {
+      return res.json({error: 'Recipient not found.'});
+    }
+
+    return res.json(recipient);
+  }
+
   async store(req, res) {
     const { cpf } = req.body;
 

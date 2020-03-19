@@ -4,6 +4,36 @@ import Deliveryman from '../models/Deliveryman';
 import Recipient from '../models/Recipient';
 
 class OrderController {
+  async show(req, res) {
+      const { id } = req.params;
+
+      const delivery = await Order.findByPk(id, {
+        include: [
+          {
+            model: File,
+            as: 'signature',
+            attributes: ['name', 'path', 'url'],
+          },
+          {
+            model: Deliveryman,
+            as: 'deliveryman',
+            attributes: ['name', 'email'],
+          },
+          {
+            model: Recipient,
+            as: 'recipient',
+            attributes: ['cpf', 'name'],
+          },
+        ],
+      });
+
+      if (!delivery) {
+        return res.json({error: 'Delivery not found.'});
+      }
+
+      return res.json(delivery);
+  }
+
   async store(req, res) {
     const { deliveryman_id, recipient_id } = req.body;
 

@@ -1,5 +1,5 @@
 import React from 'react';
-
+import PropTypes from 'prop-types';
 import { ModalStyle } from './styles';
 
 import assign from '~/assets/image.png';
@@ -45,3 +45,7 @@ export default function ModalInfo({ info }) {
     </ModalStyle>
   );
 }
+
+ModalInfo.propTypes = {
+  info: PropTypes.string.isRequired,
+};

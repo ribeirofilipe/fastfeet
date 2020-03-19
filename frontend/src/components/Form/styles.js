@@ -40,3 +40,18 @@ export const InputDiv = styled.div`
   }
   width: ${props => (props.width ? `${props.width}%` : '100%')};
 `;
+
+export const Select = styled.select`
+  margin-top: 12px;
+  padding: 14px;
+  font-size: 15px;
+  border-radius: 4px;
+  border: 1px solid #dddddd;
+  width: 100%;
+  background: #fff;
+`;
+
+export const Option = styled.option`
+  font-size: 20px;
+  border: 1px solid #fff;
+`;

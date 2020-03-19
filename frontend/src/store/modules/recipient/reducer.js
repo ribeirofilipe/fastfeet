@@ -2,6 +2,7 @@ import produce from 'immer';
 
 const INITIAL_STATE = {
   recipients: [],
+  recipient: {},
   loading: false,
 };
 
@@ -15,6 +16,15 @@ export default function recipient(state = INITIAL_STATE, action) {
       case '@recipient/GET_SUCCESS': {
         draft.loading = false;
         draft.recipients = action.payload.recipients;
+        break;
+      }
+      case '@recipient/GET_REQUEST_BY_ID': {
+        draft.loading = true;
+        break;
+      }
+      case '@recipient/GET_SUCCESS_BY_ID': {
+        draft.loading = false;
+        draft.recipient = action.payload.recipient;
         break;
       }
       case '@recipient/DELETE_REQUEST': {

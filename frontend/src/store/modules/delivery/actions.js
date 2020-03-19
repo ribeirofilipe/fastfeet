@@ -25,3 +25,45 @@ export function deleteDeliverieSuccess(id) {
     payload: { id },
   };
 }
+
+export function saveDeliveryRequest(product) {
+  return {
+    type: '@delivery/SAVE_REQUEST',
+    payload: { product },
+  };
+}
+
+export function saveDeliverySuccess(product) {
+  return {
+    type: '@delivery/SAVE_SUCCESS',
+    payload: { product },
+  };
+}
+
+export function updateDeliveryRequest(product) {
+  return {
+    type: '@delivery/UPDATE_REQUEST',
+    payload: { product },
+  };
+}
+
+export function updateDeliverySuccess(product) {
+  return {
+    type: '@delivery/UPDATE_SUCCESS',
+    payload: { product },
+  };
+}
+
+export function getDeliveryRequest(id) {
+  return {
+    type: '@delivery/GET_REQUEST_BY_ID',
+    payload: { id },
+  };
+}
+
+export function getDeliverySuccess(product) {
+  return {
+    type: '@delivery/GET_SUCCESS_BY_ID',
+    payload: { product },
+  };
+}

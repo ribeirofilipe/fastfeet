@@ -1,4 +1,4 @@
-import React, { useMemo, useState, useEffect, useCallback } from 'react';
+import React, { useMemo, useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import PropTypes from 'prop-types';
@@ -28,9 +28,11 @@ export default function DeliverymanSave({ location }) {
   const deliveryman = useSelector(state => state.deliveryman.deliveryman);
 
   useMemo(() => {
-    setName(deliveryman.name);
-    setEmail(deliveryman.email);
-    setUrl(deliveryman.avatar.url);
+    if (deliveryman) {
+      setName(deliveryman.name);
+      setEmail(deliveryman.email);
+      setUrl(deliveryman.avatar.url);
+    }
   }, [deliveryman]);
 
   useEffect(() => {
@@ -69,7 +71,7 @@ export default function DeliverymanSave({ location }) {
       <SaveContainer
         action={() => handleSubmit()}
         route={'/deliveryman'}
-        title={'Cadastro de entregadores'}
+        title={id ? 'Edição de entregadores' : 'Cadastro de entregadores'}
       />
       <Form>
         <Photo>

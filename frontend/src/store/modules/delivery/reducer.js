@@ -2,6 +2,7 @@ import produce from 'immer';
 
 const INITIAL_STATE = {
   products: [],
+  product: {},
   loading: false,
 };
 
@@ -26,6 +27,15 @@ export default function delivery(state = INITIAL_STATE, action) {
         draft.products = draft.products.filter(
           product => product.id !== action.payload.id
         );
+        break;
+      }
+      case '@delivery/GET_REQUEST_BY_ID': {
+        draft.loading = true;
+        break;
+      }
+      case '@delivery/GET_SUCCESS_BY_ID': {
+        draft.loading = false;
+        draft.product = action.payload.product;
         break;
       }
       default:

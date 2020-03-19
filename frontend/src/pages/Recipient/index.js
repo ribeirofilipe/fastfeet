@@ -5,7 +5,7 @@ import { FaPlus, FaEllipsisH } from 'react-icons/fa';
 import { MdEdit, MdDeleteForever } from 'react-icons/md';
 
 import {
-  getRecipientRequest,
+  getRecipientsRequest,
   deleteRecipientRequest,
 } from '~/store/modules/recipient/actions';
 
@@ -22,7 +22,7 @@ export default function Recipient() {
   const recipients = useSelector(state => state.recipient.recipients);
 
   useEffect(() => {
-    dispatch(getRecipientRequest());
+    dispatch(getRecipientsRequest());
   }, [dispatch]);
 
   function handleOpenDialog(id) {
@@ -39,7 +39,7 @@ export default function Recipient() {
   }
 
   function handleGetRecipient(name) {
-    dispatch(getRecipientRequest(name));
+    dispatch(getRecipientsRequest(name));
   }
 
   return (
@@ -51,7 +51,7 @@ export default function Recipient() {
           placeholder="Buscar por destinatário"
         ></input>
 
-        <Link to="recipient-save">
+        <Link to="/recipient-save">
           <button type="button">
             <span>
               <FaPlus />
@@ -96,12 +96,17 @@ export default function Recipient() {
                           recipient.id === recipientId ? 'block' : 'none',
                       }}
                     >
-                      <div>
+                      <Link
+                        to={{
+                          pathname: 'recipient-save',
+                          state: recipient.cpf,
+                        }}
+                      >
                         <Edit>
                           <MdEdit />
                         </Edit>
                         <p>Editar</p>
-                      </div>
+                      </Link>
                       <div onClick={() => handleOpenDialog(recipient.id)}>
                         <Delete>
                           <MdDeleteForever />

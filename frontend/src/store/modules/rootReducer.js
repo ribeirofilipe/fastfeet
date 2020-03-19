@@ -6,6 +6,7 @@ import deliveryman from './deliveryman/reducer';
 import recipient from './recipient/reducer';
 import problem from './problem/reducer';
 import file from './file/reducer';
+import header from './header/reducer';
 
 export default combineReducers({
   auth,
@@ -14,4 +15,5 @@ export default combineReducers({
   recipient,
   problem,
   file,
+  header,
 });

@@ -12,12 +12,16 @@ import { Table, Items } from '~/components/Table/styles';
 import { EmptyList, Edit, Delete, ActionItem } from './styles';
 import { Modal } from '~/components/Modal/Action/styles';
 import Confirmation from '~/components/Modal/Confirmation';
+import Info from '~/components/Modal/Info';
+import ModalInfo from './Info';
 
 export default function Problem() {
   const dispatch = useDispatch();
   const [selectedId, setSelectedId] = useState(0);
   const [deliveryId, setDeliveryId] = useState(0);
   const [isVisible, setIsVisible] = useState(false);
+  const [open, setOpen] = useState(false);
+  const [info, setInfo] = useState('');
 
   const problems = useSelector(state => state.problem.problems);
 
@@ -42,6 +46,11 @@ export default function Problem() {
     dispatch(cancelProblemRequest(id));
   }
 
+  function handleOpenInfo(value) {
+    setInfo(value);
+    setOpen(true);
+  }
+
   return (
     <Table>
       <span>Problemas na entrega</span>
@@ -51,6 +60,8 @@ export default function Problem() {
         handleExecute={() => handleCancelDelivery(deliveryId)}
         handleSetVisible={setIsVisible}
       />
+
+      <Info setOpen={setOpen} open={open} content={<ModalInfo info={info} />} />
 
       <Items>
         <thead>
@@ -76,7 +87,7 @@ export default function Problem() {
                           problem.order_id === selectedId ? 'block' : 'none',
                       }}
                     >
-                      <div>
+                      <div onClick={() => handleOpenInfo(problem.description)}>
                         <Edit>
                           <MdEdit />
                         </Edit>

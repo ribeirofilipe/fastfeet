@@ -13,6 +13,7 @@ export default reducers => {
         'recipient',
         'problem',
         'file',
+        'header',
       ],
     },
     reducers
