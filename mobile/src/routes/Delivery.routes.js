@@ -2,6 +2,8 @@ import React from 'react';
 
 import { createStackNavigator } from '@react-navigation/stack';
 
+import Delivery from '~/pages/Delivery';
+
 const Stack = createStackNavigator();
 
 export default function DeliveryRoutes() {
@@ -18,6 +20,11 @@ export default function DeliveryRoutes() {
       }}
       initialRouteName="Entregas"
     >
+      <Stack.Screen
+        options={{ headerShown: false }}
+        name="Entregas"
+        component={Delivery}
+      />
     </Stack.Navigator>
   );
 }

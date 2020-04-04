@@ -8,16 +8,17 @@ import { signInSuccess, signFailure } from './actions';
 
 export function* singIn({ payload }) {
   try {
-
     const { id } = payload;
 
-    const { name, email, createdAt, avatar } = yield call(
+    const response = yield call(
       api.get,
       `deliveryman/${id}`
     );
 
+    const { name, email, createdAt, avatar } = response.data;
+
     yield put(
-      signInSuccess(id, {
+      signInSuccess({
         name,
         email,
         created_at: format(parseISO(createdAt), 'dd/MM/yyyy'),
@@ -29,8 +30,7 @@ export function* singIn({ payload }) {
       'Falha na autenticação',
       'Houve um erro no login, verifique seus dados'
     );
-    yield put(signFailure());
   }
 }
 
-export default all([takeLatest('@auth/SIGN_IN_REQUEST', singIn)]);
+export default all([takeLatest('@deliveryman/SIGN_IN_REQUEST', singIn)]);

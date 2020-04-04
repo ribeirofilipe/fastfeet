@@ -5,6 +5,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import Profile from '~/pages/Profile';
+import Delivery from '~/pages/Delivery';
 import colors from '~/styles/colors';
 
 const Tab = createBottomTabNavigator();
@@ -19,6 +20,16 @@ export default function Dashboard() {
         }}
       >
         <Tab.Screen
+          name="Delivery"
+          options={{
+            tabBarLabel: 'Entregas',
+            tabBarIcon: ({ color, size }) => (
+              <Icon name="account-circle" size={size} color={color} />
+            ),
+          }}
+          component={Delivery}
+        />
+          <Tab.Screen
           name="Profile"
           options={{
             tabBarLabel: 'Meu Perfil',
