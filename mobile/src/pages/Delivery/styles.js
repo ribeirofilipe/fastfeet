@@ -63,6 +63,10 @@ export const Name = styled.Text`
   font-size: 22px;
 `;
 
+export const Card = styled.View`
+  padding: 20px 20px 0 20px;
+`;
+
 export const DeliverymanInfo = styled.View`
   flex-direction: row;
   align-items: center;
@@ -72,7 +76,6 @@ export const DeliveryInfo = styled.View`
   margin-top: 20px;
   border: 1px solid #0000001A;
   width: 85%;
-  padding: 20px;
 `;
 
 export const DeliveryName = styled.Text`
@@ -87,12 +90,12 @@ export const DeliveryHeader = styled.View`
   align-items: center;
 `;
 
-export const Footer = styled.View``;
 
 export const TimeLine = styled.View`
+
   flex-direction: row;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   margin-top: 20px;
 `;
 
@@ -103,10 +106,6 @@ export const TimeLineText = styled.Text`
   color: #999999;
 `;
 
-export const TimeLineItem = styled.View`
-  align-items: center;
-`;
-
 export const Circle = styled.View`
   background: ${props => props.active ? '#7D40E7' : '#FFF'};
   border: 1px solid #7D40E7;
@@ -115,9 +114,49 @@ export const Circle = styled.View`
   border-radius: 5px;
 `;
 
+export const Item = styled.View`
+`;
+
 export const Line = styled.View`
+  position: relative;
   background: #7D40E7;
   height: 2px;
-  width: 50px;
-  margin-bottom: 20px;
+  width: 125px;
+`;
+
+export const Status = styled.View`
+  flex-direction: row;
+  justify-content: space-between;
+`;
+
+export const Footer = styled.View`
+  margin-top: 20px;
+  background: #F8F9FD;
+  width: 100%;
+  padding: 20px;
+
+  flex-direction: row;
+  justify-content: space-between;
+`;
+
+
+export const FooterInfo = styled.View`
+  justify-content: flex-end;
+`;
+
+export const Label = styled.Text`
+  color: #999999;
+  font-size: 11px;
+`;
+
+export const Detail = styled.Text`
+  color: #7D40E7;
+  font-size: 15px;
+  font-weight: bold;
+`;
+
+export const FooterText = styled.Text`
+    color: #444444;
+    font-size: 15px;
+    font-weight: bold;
 `;

@@ -25,9 +25,15 @@ import {
   Footer,
   TimeLine,
   TimeLineText,
-  TimeLineItem,
+  Status,
   Circle,
-  Line } from './styles';
+  Item,
+  Line,
+  FooterInfo,
+  Detail,
+  Label,
+  Card,
+  FooterText } from './styles';
 
 export default function Delivery() {
   const navigation = useNavigation();
@@ -82,27 +88,83 @@ export default function Delivery() {
         </Breadcrumb>
 
         <DeliveryInfo>
+          <Card>
           <DeliveryHeader>
             <Icon name="local-shipping" color="#7D40E7" size={30} />
             <DeliveryName>Encomenda 1</DeliveryName>
           </DeliveryHeader>
           <TimeLine>
-            <TimeLineItem>
+            <Item>
               <Circle active={true} />
-              <TimeLineText>Aguardando Retirada</TimeLineText>
-            </TimeLineItem>
+            </Item>
             <Line />
-            <TimeLineItem>
+            <Item>
               <Circle active={true} />
-              <TimeLineText>Retirada</TimeLineText>
-            </TimeLineItem>
+            </Item>
             <Line />
-            <TimeLineItem>
-              <Circle active={false} />
-              <TimeLineText>Entregue</TimeLineText>
-            </TimeLineItem>
+            <Item>
+              <Circle active={true} />
+            </Item>
           </TimeLine>
-          <Footer />
+          <Status>
+              <TimeLineText>Aguardando Retirada</TimeLineText>
+              <TimeLineText style={{ marginRight: 13}}>Retirada</TimeLineText>
+              <TimeLineText>Entregue</TimeLineText>
+          </Status>
+          </Card>
+          <Footer>
+            <FooterInfo>
+              <Label>Data</Label>
+              <FooterText>15/01/2020</FooterText>
+            </FooterInfo>
+            <FooterInfo>
+              <Label>Cidade</Label>
+              <FooterText>Rio do Sul</FooterText>
+            </FooterInfo>
+            <FooterInfo>
+              <Detail>Ver detalhes</Detail>
+            </FooterInfo>
+          </Footer>
+        </DeliveryInfo>
+
+        <DeliveryInfo>
+          <Card>
+          <DeliveryHeader>
+            <Icon name="local-shipping" color="#7D40E7" size={30} />
+            <DeliveryName>Encomenda 1</DeliveryName>
+          </DeliveryHeader>
+          <TimeLine>
+            <Item>
+              <Circle active={true} />
+            </Item>
+            <Line />
+            <Item>
+              <Circle active={true} />
+            </Item>
+            <Line />
+            <Item>
+              <Circle active={false} />
+            </Item>
+          </TimeLine>
+          <Status>
+              <TimeLineText>Aguardando Retirada</TimeLineText>
+              <TimeLineText style={{ marginRight: 13}}>Retirada</TimeLineText>
+              <TimeLineText>Entregue</TimeLineText>
+          </Status>
+          </Card>
+          <Footer>
+            <FooterInfo>
+              <Label>Data</Label>
+              <FooterText>15/01/2020</FooterText>
+            </FooterInfo>
+            <FooterInfo>
+              <Label>Cidade</Label>
+              <FooterText>Rio do Sul</FooterText>
+            </FooterInfo>
+            <FooterInfo>
+              <Detail>Ver detalhes</Detail>
+            </FooterInfo>
+          </Footer>
         </DeliveryInfo>
       </Container>
     </Background>
