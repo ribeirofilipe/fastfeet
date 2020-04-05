@@ -1,7 +1,9 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
-import { signOut } from '~/store/modules/auth/actions';
+import Background from '~/components/Background';
+
+import { signOut } from '~/store/modules/deliveryman/actions';
 
 import {
   Container,
@@ -16,28 +18,29 @@ import {
 
 export default function Profile() {
   const dispatch = useDispatch();
-  const profile = useSelector(state => state?.user?.profile);
+  const deliveryman = useSelector(state => state.deliveryman.deliveryman);
 
   function handleLogout() {
     dispatch(signOut());
   }
 
   return (
-    <Container>
+    <Background>
+       <Container>
       <Content>
-        {profile?.avatar ? (
-          <Avatar source={{ uri: profile?.avatar?.url }} />
+        {deliveryman?.avatar ? (
+          <Avatar source={{ uri: deliveryman?.avatar?.url }} />
         ) : (
-          <>{profile?.name && <NamePhoto name={profile?.name} />}</>
+          <> {deliveryman?.name && <NamePhoto name={deliveryman?.name} />}</>
         )}
 
         <Details>
           <Label>Nome Completo</Label>
-          <Information>{profile?.name}</Information>
+          <Information>{deliveryman?.name}</Information>
           <Label>Email</Label>
-          <Information>{profile?.email}</Information>
+          <Information>{deliveryman?.email}</Information>
           <Label>Data de cadastro</Label>
-          <Information>{profile?.created_at}</Information>
+          <Information>{deliveryman?.created_at}</Information>
         </Details>
 
         <LogoutButton onPress={handleLogout} loading={false}>
@@ -45,5 +48,7 @@ export default function Profile() {
         </LogoutButton>
       </Content>
     </Container>
+    </Background>
+
   );
 }

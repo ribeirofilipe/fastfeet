@@ -75,7 +75,8 @@ export const DeliverymanInfo = styled.View`
 export const DeliveryInfo = styled.View`
   margin-top: 20px;
   border: 1px solid #0000001A;
-  width: 85%;
+  justify-content: center;
+  width: 350px;
 `;
 
 export const DeliveryName = styled.Text`
@@ -90,9 +91,7 @@ export const DeliveryHeader = styled.View`
   align-items: center;
 `;
 
-
 export const TimeLine = styled.View`
-
   flex-direction: row;
   align-items: center;
   justify-content: center;
@@ -132,9 +131,7 @@ export const Status = styled.View`
 export const Footer = styled.View`
   margin-top: 20px;
   background: #F8F9FD;
-  width: 100%;
   padding: 20px;
-
   flex-direction: row;
   justify-content: space-between;
 `;
@@ -155,8 +152,24 @@ export const Detail = styled.Text`
   font-weight: bold;
 `;
 
+export const DetailButton = styled.TouchableOpacity`
+  color: #7D40E7;
+  font-size: 15px;
+  font-weight: bold;
+`;
+
 export const FooterText = styled.Text`
     color: #444444;
     font-size: 15px;
     font-weight: bold;
+`;
+
+export const Deliveries = styled.FlatList.attrs({
+  contentContainerStyle: { alignItems: 'center', paddingBottom: 160 },
+  showsVerticalScrollIndicator: false,
+})`
+`;
+
+export const List = styled.View`
+  width: 100%;
 `;

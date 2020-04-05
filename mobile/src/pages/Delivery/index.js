@@ -1,17 +1,20 @@
-import React, { useState } from 'react';
-import { useNavigation } from '@react-navigation/native';
-import { useSelector } from 'react-redux';
+import React, { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+
+import { format, parseISO } from 'date-fns';
 
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
+import { getDeliveriesRequest } from '~/store/modules/delivery/actions';
+
 import Background from '~/components/Background';
+import Pending from './Pending';
 
 import {
   Container,
   Avatar,
   Header,
   Breadcrumb,
-  DeliveryInfo,
   Info,
   TextInfo,
   DeliverymanInfo,
@@ -20,26 +23,28 @@ import {
   Name,
   TabButton,
   TabText,
-  DeliveryName,
-  DeliveryHeader,
-  Footer,
-  TimeLine,
-  TimeLineText,
-  Status,
-  Circle,
-  Item,
-  Line,
-  FooterInfo,
-  Detail,
-  Label,
-  Card,
-  FooterText } from './styles';
+  Deliveries } from './styles';
 
 export default function Delivery() {
-  const navigation = useNavigation();
+
+  const [deliveries, setDeliveries] = useState([]);
   const [tabSelected, setTabSelected] = useState('pending');
+  const dispatch = useDispatch();
 
   const deliveryman = useSelector(state => state.deliveryman.deliveryman);
+  const deliveriesFound = useSelector(state => state.delivery.deliveries);
+
+  useEffect(() => {
+    dispatch(getDeliveriesRequest(deliveryman.id));
+
+    const newDeliveries = deliveriesFound.map(delivery => ({
+      ...delivery,
+      created_at: format(parseISO(delivery.createdAt), 'dd/MM/yyyy'),
+    }))
+
+    setDeliveries(newDeliveries);
+  }, [])
+
 
   function handleSelectViewType(tab) {
     if (tab === 'pending') {
@@ -56,13 +61,11 @@ export default function Delivery() {
       <Container>
         <Header>
           <DeliverymanInfo>
-            <Avatar
-              source={{
-                uri: deliveryman.avatar
-                  ? deliveryman.avatar.url
-                  : 'https://avatars1.githubusercontent.com/u/15038553?s=460&u=86c88160916f81df81c7c7c15b021a171d341771&v=4',
-              }}
-            />
+            {deliveryman?.avatar ? (
+              <Avatar source={{ uri: deliveryman?.avatar?.url }} />
+            ) : (
+              <>{deliveryman?.name && <NamePhoto name={deliveryman?.name} />}</>
+            )}
             <Info>
               <TextInfo>Bem vindo de volta,</TextInfo>
               <Name>{ deliveryman.name }</Name>
@@ -87,85 +90,15 @@ export default function Delivery() {
           </Tab>
         </Breadcrumb>
 
-        <DeliveryInfo>
-          <Card>
-          <DeliveryHeader>
-            <Icon name="local-shipping" color="#7D40E7" size={30} />
-            <DeliveryName>Encomenda 1</DeliveryName>
-          </DeliveryHeader>
-          <TimeLine>
-            <Item>
-              <Circle active={true} />
-            </Item>
-            <Line />
-            <Item>
-              <Circle active={true} />
-            </Item>
-            <Line />
-            <Item>
-              <Circle active={true} />
-            </Item>
-          </TimeLine>
-          <Status>
-              <TimeLineText>Aguardando Retirada</TimeLineText>
-              <TimeLineText style={{ marginRight: 13}}>Retirada</TimeLineText>
-              <TimeLineText>Entregue</TimeLineText>
-          </Status>
-          </Card>
-          <Footer>
-            <FooterInfo>
-              <Label>Data</Label>
-              <FooterText>15/01/2020</FooterText>
-            </FooterInfo>
-            <FooterInfo>
-              <Label>Cidade</Label>
-              <FooterText>Rio do Sul</FooterText>
-            </FooterInfo>
-            <FooterInfo>
-              <Detail>Ver detalhes</Detail>
-            </FooterInfo>
-          </Footer>
-        </DeliveryInfo>
+        <Deliveries
+          data={deliveries}
+          keyExtractor={delivery => String(delivery.id)}
+          // onEndReached={loadIncidents}
+          renderItem={({ item: delivery }) => (
+              <Pending key={delivery.id} delivery={delivery} />
+          )}
+        />
 
-        <DeliveryInfo>
-          <Card>
-          <DeliveryHeader>
-            <Icon name="local-shipping" color="#7D40E7" size={30} />
-            <DeliveryName>Encomenda 1</DeliveryName>
-          </DeliveryHeader>
-          <TimeLine>
-            <Item>
-              <Circle active={true} />
-            </Item>
-            <Line />
-            <Item>
-              <Circle active={true} />
-            </Item>
-            <Line />
-            <Item>
-              <Circle active={false} />
-            </Item>
-          </TimeLine>
-          <Status>
-              <TimeLineText>Aguardando Retirada</TimeLineText>
-              <TimeLineText style={{ marginRight: 13}}>Retirada</TimeLineText>
-              <TimeLineText>Entregue</TimeLineText>
-          </Status>
-          </Card>
-          <Footer>
-            <FooterInfo>
-              <Label>Data</Label>
-              <FooterText>15/01/2020</FooterText>
-            </FooterInfo>
-            <FooterInfo>
-              <Label>Cidade</Label>
-              <FooterText>Rio do Sul</FooterText>
-            </FooterInfo>
-            <FooterInfo>
-              <Detail>Ver detalhes</Detail>
-            </FooterInfo>
-          </Footer>
-        </DeliveryInfo>
       </Container>
     </Background>
   );

@@ -5,24 +5,20 @@ const INITIAL_STATE = {
 	signed: false,
   loading: false,
   deliveryman: null,
+  deliveries: [],
 };
 
-export default function deliveryman(state = INITIAL_STATE, action) {
+export default function delivery(state = INITIAL_STATE, action) {
 	return produce(state, draft => {
 		switch (action.type) {
-			case '@deliveryman/SIGN_IN_REQUEST': {
+			case '@delivery/GET_DELIVERYMAN_DELIVERIES_REQUEST': {
 				draft.loading = true;
 				break;
 			}
-			case '@deliveryman/SIGN_IN_SUCCESS': {
+			case '@delivery/GET_DELIVERYMAN_DELIVERIES_SUCCESS': {
 				draft.signed = true;
         draft.loading = false;
-        draft.deliveryman = action.payload.user;
-				break;
-      }
-      case '@deliveryman/SIGN_OUT': {
-				draft.token = null;
-				draft.signed = false;
+        draft.deliveries = action.payload.deliveries;
 				break;
 			}
 			default:

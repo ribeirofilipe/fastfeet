@@ -1,30 +1,30 @@
 import produce from 'immer';
 
 const INITIAL_STATE = {
-	token: null,
-	signed: false,
   loading: false,
-  deliveryman: null,
+  problems: [],
 };
 
 export default function deliveryman(state = INITIAL_STATE, action) {
 	return produce(state, draft => {
 		switch (action.type) {
-			case '@deliveryman/SIGN_IN_REQUEST': {
+			case '@problem/SEND_PROBLEM_REQUEST': {
 				draft.loading = true;
 				break;
 			}
-			case '@deliveryman/SIGN_IN_SUCCESS': {
-				draft.signed = true;
+			case '@problem/SEND_PROBLEM_SUCCESS': {
         draft.loading = false;
-        draft.deliveryman = action.payload.user;
 				break;
       }
-      case '@deliveryman/SIGN_OUT': {
-				draft.token = null;
-				draft.signed = false;
+      case '@problem/GET_PROBLEM_REQUEST': {
+				draft.loading = true;
 				break;
 			}
+			case '@problem/GET_PROBLEM_SUCCESS': {
+        draft.loading = false;
+        draft.problems = action.payload.problems
+				break;
+      }
 			default:
 		}
 	});

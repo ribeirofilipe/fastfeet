@@ -19,6 +19,7 @@ export function* singIn({ payload }) {
 
     yield put(
       signInSuccess({
+        id,
         name,
         email,
         created_at: format(parseISO(createdAt), 'dd/MM/yyyy'),

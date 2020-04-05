@@ -8,8 +8,6 @@ import colors from '~/styles/colors';
 
 export const Container = styled.SafeAreaView`
   flex: 1;
-  background: #7159c1;
-
   justify-content: center;
 `;
 

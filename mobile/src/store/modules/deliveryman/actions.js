@@ -11,3 +11,9 @@ export function signInSuccess(user) {
 		payload: { user },
 	};
 }
+
+export function signOut() {
+	return {
+		type: '@deliveryman/SIGN_OUT',
+	};
+}
