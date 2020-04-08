@@ -1,7 +1,6 @@
-import { Op } from 'sequelize';
 import DeliveryProblem from '../models/DeliveryProblem';
 import Queue from '../../lib/Queue';
-import Order from '../models/Order';
+import Delivery from '../models/Delivery';
 import Deliveryman from '../models/Deliveryman';
 import Recipient from '../models/Recipient';
 import CancellationMail from '../jobs/CancellationMail';
@@ -10,8 +9,8 @@ class DeliveryProblemController {
   async index(req, res) {
     const deliveryProblems = await DeliveryProblem.findAll({
       include: [{
-      model: Order,
-      as: 'order',
+      model: Delivery,
+      as: 'delivery',
       where: {
         canceled_at: null
       }
@@ -22,11 +21,11 @@ class DeliveryProblemController {
   }
 
   async show(req, res) {
-    const { id: order_id } = req.params;
+    const { id: delivery_id } = req.params;
 
     const deliveryProblems = await DeliveryProblem.findAll({
       where: {
-        order_id
+        delivery_id
       },
     });
 
@@ -34,10 +33,10 @@ class DeliveryProblemController {
   }
 
   async store(req, res) {
-    const { id: order_id } = req.params;
+    const { id: delivery_id } = req.params;
     const { description } = req.body;
 
-    const order = await Order.findOne({ where: { id: order_id }});
+    const order = await Delivery.findOne({ where: { id: delivery_id }});
 
     if (!order) {
       return res.status(404).json({ error: 'Order not found!'})
@@ -45,20 +44,20 @@ class DeliveryProblemController {
 
     const { id: deliveryProblemId } = await DeliveryProblem.create({
       description,
-      order_id
+      delivery_id
     });
 
     return res.json({
       deliveryProblemId,
       description,
-      order_id,
+      delivery_id,
     });
   }
 
   async destroy(req, res) {
     const { id } = req.params;
 
-    const order = await Order.findOne({ where: { id },
+    const order = await Delivery.findOne({ where: { id },
       include: [
         {
           model: Deliveryman,

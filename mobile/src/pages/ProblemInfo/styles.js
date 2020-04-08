@@ -1,12 +1,13 @@
 import styled from 'styled-components';
 import Textarea from 'react-native-textarea';
-import { RectButton } from 'react-native-gesture-handler';
-import Background from '~/components/Background';
+import CButton from '~/components/Button';
+import colors from '~/styles/colors';
 
 export const Container = styled.View`
   justify-content: center;
   align-items: center;
   margin: -85px auto;
+
 `;
 
 export const TextArea = styled(Textarea).attrs({
@@ -22,14 +23,17 @@ export const TextArea = styled(Textarea).attrs({
   border: 1px solid #0000001A;
 `;
 
-export const SubmitButton = styled(RectButton)`
+export const Button = styled(CButton)`
+  background: ${colors.primary};
+
   justify-content: center;
   align-items: center;
 
+  margin-top: 200px;
+
   background: #7D40E7;
   width: 370px;
-  height: 8%;
-  margin: 180px auto;
+  height: 10%;
   border-radius: 4px;
   color: #FFF;
 `;

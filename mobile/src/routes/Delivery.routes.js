@@ -11,8 +11,6 @@ import DeliveryConfirm from '~/pages/DeliveryConfirm';
 
 const Stack = createStackNavigator();
 
-const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get('window')
-
 export default function DeliveryRoutes() {
   return (
     <Stack.Navigator

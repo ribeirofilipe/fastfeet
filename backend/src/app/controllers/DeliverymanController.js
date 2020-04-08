@@ -4,6 +4,7 @@ import File from '../models/File';
 
 class DeliverymanController {
   async store(req, res) {
+
     const deliveryman = await Deliveryman.findOne({ where: { email: req.body.email }});
 
     if (deliveryman) {
@@ -44,6 +45,7 @@ class DeliverymanController {
     });
 
     return res.json({
+      id: deliveryman.id,
       name: deliveryman.name,
       email,
       avatar: deliveryman.avatar.path

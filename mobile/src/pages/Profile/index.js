@@ -31,9 +31,8 @@ export default function Profile() {
         {deliveryman?.avatar ? (
           <Avatar source={{ uri: deliveryman?.avatar?.url }} />
         ) : (
-          <> {deliveryman?.name && <NamePhoto name={deliveryman?.name} />}</>
+          <>{deliveryman?.name && <NamePhoto name={deliveryman?.name} />}</>
         )}
-
         <Details>
           <Label>Nome Completo</Label>
           <Information>{deliveryman?.name}</Information>

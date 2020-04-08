@@ -134,7 +134,10 @@ android {
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
         versionName "1.0"
+        multiDexEnabled true
+        missingDimensionStrategy 'react-native-camera', 'general'
     }
+
     splits {
         abi {
             reset()
@@ -190,6 +193,7 @@ android {
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation project(':react-native-linear-gradient')
+    implementation project(':react-native-fs')
 
     //noinspection GradleDynamicVersion
     implementation "com.facebook.react:react-native:+"  // From node_modules

@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { StatusBar } from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { useNavigation } from '@react-navigation/native';
 
@@ -8,6 +9,10 @@ import Background from '~/components/Background';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import colors from '~/styles/colors';
+
+import Button from '~/components/Button';
+
+import { startDeliveryRequest } from '~/store/modules/delivery/actions';
 
 import {
   Container,
@@ -22,12 +27,21 @@ import {
   Data,
   DataSlot,
   ItemText,
-  InfoText } from './styles';
+  InfoText,
+  StartDelivery } from './styles';
 
 export default function Detail({ route }) {
   const navigation = useNavigation();
+  const dispatch = useDispatch();
 
   const { delivery } = route.params;
+  const deliveryman = useSelector(state => state.deliveryman.deliveryman);
+
+  function handleStartDelivery() {
+    dispatch(startDeliveryRequest(delivery.id, deliveryman.id));
+
+    navigation.navigate('Delivery');
+  }
 
   return (
     <>
@@ -75,11 +89,11 @@ export default function Detail({ route }) {
               <DataSlot>
                 <Data>
                   <Label>DATA DE RETIRADA</Label>
-                  <InfoText>{ delivery.start_date ?? '- - / - - / - - - -'}</InfoText>
+                  <InfoText>{ delivery.startDate ?? '- - / - - / - - - -'}</InfoText>
                 </Data>
                 <Data>
                   <Label>DATA DE ENTREGA</Label>
-                  <InfoText>{ delivery.end_date ?? '- - / - - / - - - -' }</InfoText>
+                  <InfoText>{ delivery.endDate ?? '- - / - - / - - - -' }</InfoText>
                 </Data>
               </DataSlot>
             </Recipient>
@@ -103,11 +117,17 @@ export default function Detail({ route }) {
               <Icon name="error-outline" color="yellow" size={25} />
               <ItemText>Visualizar Problemas</ItemText>
             </Item>
-            <Item onPress={() => { navigation.navigate('DeliveryConfirm') }}>
+            <Item disabled={ !delivery.start_date }  onPress={() => { navigation.navigate('DeliveryConfirm', { id: delivery.id }) }}>
               <Icon name="check-circle" color="purple" backgroundColor="red" size={25} />
               <ItemText>Confimar Entrega</ItemText>
             </Item>
           </Footer>
+
+          <StartDelivery>
+            <Button onPress={ handleStartDelivery } loading={false}>
+              RETIRAR ENCOMENDA
+            </Button>
+          </StartDelivery>
         </Container>
       </Background>
   </>

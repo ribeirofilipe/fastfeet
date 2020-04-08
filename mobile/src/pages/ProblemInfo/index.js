@@ -3,14 +3,12 @@ import { useDispatch } from 'react-redux';
 
 import { useNavigation } from '@react-navigation/native';
 
-import { Text } from 'react-native';
-
 import Background from '~/components/Background';
 import BackgroundHeader from '~/components/BackgroundHeader';
 
 import { sendProblemRequest } from '~/store/modules/problem/actions';
 
-import { Container, TextArea, SubmitButton } from './styles';
+import { Container, TextArea, Button } from './styles';
 
 export default function ProblemInfo({ route }) {
   const dispatch = useDispatch();
@@ -38,9 +36,9 @@ export default function ProblemInfo({ route }) {
             onChangeText={ setDescription }
             placeholder={'Inclua aqui o problema que ocorreu na entrega.'}
           />
-          <SubmitButton onPress={ handleSendProblem } >
-            <Text style={{ fontSize: 20, color: '#FFF' }}>Enviar</Text>
-          </SubmitButton>
+          <Button onPress={() => handleSendProblem()} loading={false}>
+            Enviar
+          </Button>
        </Container>
      </Background>
     </>
