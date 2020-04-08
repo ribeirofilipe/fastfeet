@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { format, parseISO } from 'date-fns';
@@ -31,8 +31,6 @@ import {
 
 export default function Delivery() {
 
-  const [pending, setPending] = useState([]);
-  const [deliveried, setDeliveried] = useState([]);
   const [tabSelected, setTabSelected] = useState('pending');
   const dispatch = useDispatch();
 
@@ -41,15 +39,17 @@ export default function Delivery() {
   const deliveriesPendingFound = useSelector(state => state.delivery.deliveriesPending);
   const id = useSelector(state => state.file.id);
 
+  const newDeliveries = useMemo(() =>
+    getDeliveries(deliveriesFound),
+  [deliveriesFound])
+
+  const newDeliveriesPending = useMemo(() =>
+    getDeliveries(deliveriesPendingFound),
+  [deliveriesPendingFound])
+
   async function initData() {
     await dispatch(getDeliveriesRequest(deliveryman.id));
     await dispatch(getDeliveriesPendingRequest(deliveryman.id));
-
-    const newDeliveries = getDeliveries(deliveriesFound);
-    setDeliveried(newDeliveries);
-
-    const newDeliveriesPending = getDeliveries(deliveriesPendingFound);
-    setPending(newDeliveriesPending);
   }
 
   useEffect(() => {
@@ -114,8 +114,9 @@ export default function Delivery() {
         </Breadcrumb>
 
         <Deliveries
-          data={ tabSelected === 'deliveried' ? deliveried : pending}
+          data={ tabSelected === 'deliveried' ? newDeliveries : newDeliveriesPending}
           // onEndReached={loadDeliveries}
+          keyExtractor={item => String(item.id)}
           renderItem={({ item: delivery }) => (
               <DeliveryInfo key={delivery.id} delivery={delivery} />
           )}

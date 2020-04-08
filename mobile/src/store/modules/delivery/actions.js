@@ -33,8 +33,9 @@ export function startDeliveryRequest(id, deliveryman_id) {
 	};
 }
 
-export function startDeliverySuccess() {
+export function startDeliverySuccess(id, start_date) {
 	return {
-		type: '@delivery/START_DELIVERY_SUCCESS',
+    type: '@delivery/START_DELIVERY_SUCCESS',
+    payload: { id, start_date },
 	};
 }

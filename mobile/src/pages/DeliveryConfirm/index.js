@@ -54,8 +54,6 @@ export default function DeliveryConfirm({ route }) {
       const options = { quality: 0.5, base64: true };
       const data = await cameraRef.current.takePictureAsync(options);
       setPictureUri(data.uri);
-
-
     }
   }
 

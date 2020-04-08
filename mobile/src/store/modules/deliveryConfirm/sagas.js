@@ -10,11 +10,11 @@ export function* sendDeliveryConfirm({ payload }) {
   try {
     const { id, deliveryman_id, signature_id } = payload;
 
-    yield call(
+    const response = yield call(
       api.put,
       `/deliveryman/${deliveryman_id}/finish-delivery/${id}`, { signature_id });
 
-    yield put(sendDeliveryConfirmSuccess());
+    yield put(sendDeliveryConfirmSuccess(id, response.data.end_date));
   } catch (err) {
     Alert.alert(
       'Falha ao finalizar uma entrega',

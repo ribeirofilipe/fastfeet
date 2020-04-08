@@ -45,11 +45,11 @@ export function* startDelivery({ payload }) {
   try {
     const { id, deliveryman_id } = payload;
 
-    yield call(
+    const response = yield call(
       api.put,
       `/deliveryman/${deliveryman_id}/start-delivery/${id}`);
 
-    yield put(startDeliverySuccess());
+    yield put(startDeliverySuccess(id, response.data.start_date));
 
     Alert.alert(
       'Sucesso!',

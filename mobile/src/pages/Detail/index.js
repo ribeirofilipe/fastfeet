@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { StatusBar } from 'react-native';
+import { StatusBar,Alert } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { useNavigation } from '@react-navigation/native';
@@ -38,6 +38,15 @@ export default function Detail({ route }) {
   const deliveryman = useSelector(state => state.deliveryman.deliveryman);
 
   function handleStartDelivery() {
+    if (delivery.start_date) {
+      Alert.alert(
+        'Hey!',
+        'Encomenda já iniciada!'
+      );
+
+      return;
+    }
+
     dispatch(startDeliveryRequest(delivery.id, deliveryman.id));
 
     navigation.navigate('Delivery');
@@ -100,8 +109,8 @@ export default function Detail({ route }) {
           </Info>
 
           <Footer>
-            <Item onPress={() => { navigation.navigate('ProblemInfo', { id: delivery.id }) }}>
-              <Icon name="highlight-off" color="red" size={25}/>
+            <Item disabled={ !!delivery.end_date } onPress={() => { navigation.navigate('ProblemInfo', { id: delivery.id }) }}>
+              <Icon name="highlight-off" color={ !!delivery.end_date ? 'gray' : 'red' } size={25}/>
               <ItemText>Informar Problema</ItemText>
             </Item>
             <Item onPress={() => { navigation.navigate('Problem', {
@@ -117,13 +126,13 @@ export default function Detail({ route }) {
               <Icon name="error-outline" color="yellow" size={25} />
               <ItemText>Visualizar Problemas</ItemText>
             </Item>
-            <Item disabled={ !delivery.start_date }  onPress={() => { navigation.navigate('DeliveryConfirm', { id: delivery.id }) }}>
-              <Icon name="check-circle" color="purple" backgroundColor="red" size={25} />
+            <Item disabled={ !!delivery.end_date || !delivery.start_date } onPress={() => { navigation.navigate('DeliveryConfirm', { id: delivery.id }) }}>
+              <Icon name="check-circle" color={ !!delivery.end_date || !delivery.start_date ? 'gray' : 'purple' }  backgroundColor="red" size={25} />
               <ItemText>Confimar Entrega</ItemText>
             </Item>
           </Footer>
 
-          <StartDelivery>
+          <StartDelivery status={ delivery.start_date || delivery.end_date }>
             <Button onPress={ handleStartDelivery } loading={false}>
               RETIRAR ENCOMENDA
             </Button>

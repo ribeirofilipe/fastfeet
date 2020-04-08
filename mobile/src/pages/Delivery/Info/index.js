@@ -34,11 +34,11 @@ export default function Info({ delivery }) {
         </DeliveryHeader>
         <TimeLine>
           <Item>
-            <Circle active={!!delivery.start_date} />
+            <Circle active={!!delivery.createdAt} />
           </Item>
           <Line />
           <Item>
-            <Circle active={!!delivery.end_date} />
+            <Circle active={!!delivery.start_date} />
           </Item>
           <Line />
           <Item>

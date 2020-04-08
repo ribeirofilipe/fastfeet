@@ -37,8 +37,23 @@ export default function delivery(state = INITIAL_STATE, action) {
 				break;
 			}
 			case '@delivery/START_DELIVERY_SUCCESS': {
+        const { id, start_date } = action.payload;
+
+        draft.deliveriesPending = draft.deliveriesPending.map(delivery => ({
+          ...delivery,
+          start_date: delivery.id === id ? start_date : delivery.start_date,
+        }));
+
         draft.loading = false;
 				break;
+      }
+      case '@deliveryConfirm/SEND_DELIVERY_CONFIRM_SUCCESS': {
+        const { id, end_date } = action.payload;
+
+        draft.deliveriesPending = draft.deliveriesPending.map(delivery => ({
+          ...delivery,
+          end_date: delivery.id === id ? end_date : delivery.end_date,
+        }));
       }
 			default:
 

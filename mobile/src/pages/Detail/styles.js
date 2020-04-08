@@ -77,7 +77,7 @@ export const ItemText = styled.Text`
 
 export const StartDelivery = styled.View`
   margin-top: 20px;
-  background: #7158c1;
+  background: ${props => props.status ? 'gray' : '#7158c1' };
   padding: 10px 20px;
   border-radius: 4px;
 `;
