@@ -57,7 +57,7 @@ export function* startDelivery({ payload }) {
     );
   } catch (err) {
     Alert.alert(
-      'Falha ao finalizar uma entrega',
+      'Falha ao iniciar uma entrega',
       'Houve um erro, verifique seus dados'
     );
   }

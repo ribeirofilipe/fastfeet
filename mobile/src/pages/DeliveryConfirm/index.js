@@ -23,14 +23,13 @@ import {
 export default function DeliveryConfirm({ route }) {
   const dispatch = useDispatch();
   const navigation = useNavigation();
-  let cameraRef = useRef(null);
+  const cameraRef = useRef(null);
   const [pictureUri, setPictureUri] = useState('');
 
   const deliveryman = useSelector(state => state.deliveryman.deliveryman);
   const signature_id = useSelector(state => state.file.id);
 
   const { id } = route.params;
-
 
   async function registerFile(originalname, filename) {
     dispatch(sendFileRequest(originalname, filename));
@@ -70,12 +69,12 @@ export default function DeliveryConfirm({ route }) {
             ) : (
               <CameraContainer>
                 <RNCamera
-                  ref={ cameraRef }
+                  ref={ cameraRef ?? '' }
                   type={ "back" }
                   style={{ flex: 1 }}
                   captureAudio={ false }
                 />
-                <TakePictureButton onPress={handleTakePicture}>
+                <TakePictureButton onPress={(handleTakePicture)}>
                   <Icon name="photo-camera" color="#fff" size={30} />
                 </TakePictureButton>
               </CameraContainer>

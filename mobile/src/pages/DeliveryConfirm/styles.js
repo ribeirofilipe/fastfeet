@@ -1,6 +1,5 @@
 import styled from 'styled-components/native';
 import { RectButton } from 'react-native-gesture-handler';
-import { RNCamera } from 'react-native-camera';
 import CButton from '~/components/Button';
 
 import colors from '~/styles/colors';

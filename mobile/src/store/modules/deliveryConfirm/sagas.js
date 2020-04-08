@@ -18,7 +18,7 @@ export function* sendDeliveryConfirm({ payload }) {
   } catch (err) {
     Alert.alert(
       'Falha ao finalizar uma entrega',
-      'Houve um erro, verifique seus dados'
+      'Houve um erro,'
     );
   }
 }
