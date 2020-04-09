@@ -64,6 +64,7 @@ class RecipientController {
 
   async index(req, res) {
     const { name } = req.query;
+    const { page } = req.body;
 
     const query = name ? {
       name : {
@@ -71,11 +72,19 @@ class RecipientController {
       }
     } : null;
 
+    const total = await Recipient.count();
+
     const recipients = await Recipient.findAll({
       where: query,
+      order: [['name', 'ASC']],
+      limit: 5,
+      offset: (page - 1) * 5,
     });
 
-    return res.json(recipients);
+    return res.json({
+      recipients,
+      total
+    });
   }
 
   async destroy(req, res) {

@@ -27,6 +27,7 @@ export default function Header() {
   }
 
   function handleSignOut() {
+    setMenuSelected('delivery');
     dispatch(signOut());
   }
 
@@ -80,7 +81,9 @@ export default function Header() {
           <Profile>
             <div>
               <strong>Filipe Ribeiro</strong>
-              <Link onClick={handleSignOut}>Sair</Link>
+              <Link to="/" onClick={handleSignOut}>
+                Sair
+              </Link>
             </div>
             <img
               src={

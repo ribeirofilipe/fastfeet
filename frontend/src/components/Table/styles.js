@@ -78,6 +78,8 @@ export const Items = styled.table`
         background: #fff;
         padding: 15px 0 15px 30px;
 
+        height: 70px;
+
         span {
           display: flex;
           align-items: center;

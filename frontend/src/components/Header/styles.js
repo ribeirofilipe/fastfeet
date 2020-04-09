@@ -27,6 +27,7 @@ export const Content = styled.div`
       justify-content: flex-start;
 
       a {
+        margin-top: 20px;
         margin-right: 20px;
         color: #999999;
         font-weight: bold;

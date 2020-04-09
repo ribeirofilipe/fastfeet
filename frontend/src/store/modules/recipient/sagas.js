@@ -14,11 +14,14 @@ import {
 
 export function* getRecipientsRequest({ payload }) {
   try {
-    const { recipient } = payload;
+    const { recipient, page } = payload;
 
     const response = yield call(
       api.post,
-      `recipients${recipient ? `?name=${recipient}` : ''}`
+      `recipients${recipient ? `?name=${recipient}` : ''}`,
+      {
+        page,
+      }
     );
 
     yield put(getRecipientsSuccess(response.data));

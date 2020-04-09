@@ -133,15 +133,15 @@ export default function Delivery() {
           </button>
         </Link>
       </div>
-
       <Checkbox checked={withProblem} execute={handleGetProblems} />
       <Confirmation
         isVisible={isVisible}
         handleExecute={() => handleDeleteProduct(productId)}
         handleSetVisible={setIsVisible}
       />
-
-      <Info setOpen={setOpen} open={open} content={<ModalInfo info={info} />} />
+      <Info setOpen={setOpen} open={open}>
+        <ModalInfo info={info} />
+      </Info>
 
       <Items>
         <thead>

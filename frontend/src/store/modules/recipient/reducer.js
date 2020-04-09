@@ -3,6 +3,7 @@ import produce from 'immer';
 const INITIAL_STATE = {
   recipients: [],
   recipient: {},
+  total: 0,
   loading: false,
 };
 
@@ -15,7 +16,8 @@ export default function recipient(state = INITIAL_STATE, action) {
       }
       case '@recipient/GET_SUCCESS': {
         draft.loading = false;
-        draft.recipients = action.payload.recipients;
+        draft.recipients = action.payload.recipients.recipients;
+        draft.total = action.payload.recipients.total;
         break;
       }
       case '@recipient/GET_REQUEST_BY_ID': {

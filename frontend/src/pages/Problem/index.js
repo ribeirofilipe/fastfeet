@@ -14,6 +14,7 @@ import { Modal } from '~/components/Modal/Action/styles';
 import Confirmation from '~/components/Modal/Confirmation';
 import Info from '~/components/Modal/Info';
 import ModalInfo from './Info';
+import Pagination from '~/components/Pagination';
 
 export default function Problem() {
   const dispatch = useDispatch();
@@ -23,11 +24,15 @@ export default function Problem() {
   const [open, setOpen] = useState(false);
   const [info, setInfo] = useState('');
 
-  const problems = useSelector(state => state.problem.problems);
+  const { problems, total } = useSelector(state => state.problem);
 
   useEffect(() => {
     dispatch(getProblemsRequest());
   }, [dispatch]);
+
+  function getProblems(page) {
+    dispatch(getProblemsRequest(page));
+  }
 
   function handleOpenDialog(id) {
     setDeliveryId(id);
@@ -72,7 +77,7 @@ export default function Problem() {
           </tr>
         </thead>
         <tbody>
-          {problems.length > 0 ? (
+          {problems && problems.length > 0 ? (
             problems.map(problem => (
               <tr key={problem.id}>
                 <td># {problem.delivery_id}</td>
@@ -115,6 +120,9 @@ export default function Problem() {
           )}
         </tbody>
       </Items>
+      {problems && problems.length > 0 && (
+        <Pagination loadItems={getProblems} itemsLenght={total} />
+      )}
     </Table>
   );
 }

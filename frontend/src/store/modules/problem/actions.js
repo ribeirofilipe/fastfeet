@@ -1,6 +1,7 @@
-export function getProblemsRequest() {
+export function getProblemsRequest(page = 1) {
   return {
     type: '@problem/GET_REQUEST',
+    payload: { page },
   };
 }
 

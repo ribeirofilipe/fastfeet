@@ -5,9 +5,13 @@ import api from '~/services/api';
 
 import { cancelProblemSuccess, getProblemsSuccess } from './actions';
 
-export function* getProblemRequest() {
+export function* getProblemRequest({ payload }) {
   try {
-    const response = yield call(api.get, 'problems');
+    const { page } = payload;
+
+    const response = yield call(api.post, 'problems', {
+      page,
+    });
 
     yield put(getProblemsSuccess(response.data));
   } catch (err) {

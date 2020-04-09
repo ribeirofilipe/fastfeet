@@ -25,7 +25,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function Info({ setOpen, open, content }) {
+export default function Info({ setOpen, open, children }) {
   const classes = useStyles();
 
   const [modalStyle] = React.useState(getModalStyle);
@@ -39,7 +39,7 @@ export default function Info({ setOpen, open, content }) {
         onClose={() => setOpen(false)}
       >
         <div style={modalStyle} className={classes.paper}>
-          {content}
+          {children}
         </div>
       </Modal>
     </div>
@@ -49,5 +49,5 @@ export default function Info({ setOpen, open, content }) {
 Info.propTypes = {
   setOpen: PropTypes.func,
   open: PropTypes.bool,
-  content: PropTypes.object,
+  children: PropTypes.object,
 };

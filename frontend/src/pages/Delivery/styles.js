@@ -71,6 +71,7 @@ export const Withdrawal = styled.span`
 export const Pending = styled.span`
   display: flex;
   justify-content: center;
+
   width: 65%;
   color: #c1bc35;
   background: #f0f0df;

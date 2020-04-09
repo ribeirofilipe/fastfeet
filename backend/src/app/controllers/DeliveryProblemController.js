@@ -7,17 +7,27 @@ import CancellationMail from '../jobs/CancellationMail';
 
 class DeliveryProblemController {
   async index(req, res) {
-    const deliveryProblems = await DeliveryProblem.findAll({
+    const { page } = req.body;
+
+    const total = await DeliveryProblem.count();
+
+    const problems = await DeliveryProblem.findAll({
       include: [{
         model: Delivery,
         as: 'delivery',
         where: {
           canceled_at: null
         }
-      }]
+      }],
+      order: [['id', 'ASC']],
+      limit: 5,
+      offset: (page - 1) * 5,
     })
 
-    return res.json(deliveryProblems);
+    return res.json({
+      problems,
+      total
+    });
   }
 
   async show(req, res) {

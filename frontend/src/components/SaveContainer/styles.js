@@ -21,12 +21,17 @@ export const Container = styled.div`
 
     a,
     button {
+      display: flex;
+      align-items: center;
+
+      height: 50px;
       color: #fff;
       border-radius: 4px;
       font-weight: bold;
       font-size: 16px;
       p {
         margin-left: 8px;
+        margin-top: 8px;
       }
     }
 
@@ -34,9 +39,13 @@ export const Container = styled.div`
       display: flex;
       align-items: center;
 
+      p {
+        margin-top: 15px;
+      }
+
       margin-right: 20px;
       background: #cccccc;
-      padding: 8px 25px;
+      padding: 0 25px;
     }
 
     button {

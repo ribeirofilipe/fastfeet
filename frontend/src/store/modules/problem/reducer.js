@@ -2,6 +2,7 @@ import produce from 'immer';
 
 const INITIAL_STATE = {
   problems: [],
+  total: 0,
   loading: false,
 };
 
@@ -14,7 +15,8 @@ export default function problem(state = INITIAL_STATE, action) {
       }
       case '@problem/GET_SUCCESS': {
         draft.loading = false;
-        draft.problems = action.payload.problems;
+        draft.problems = action.payload.problems.problems;
+        draft.total = action.payload.problems.total;
         break;
       }
       case '@problem/DELETE_REQUEST': {

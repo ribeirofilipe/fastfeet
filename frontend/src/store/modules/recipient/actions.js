@@ -1,7 +1,7 @@
-export function getRecipientsRequest(recipient) {
+export function getRecipientsRequest(recipient, page = 1) {
   return {
     type: '@recipient/GET_REQUEST',
-    payload: { recipient },
+    payload: { recipient, page },
   };
 }
 

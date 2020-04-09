@@ -13,6 +13,7 @@ import { Table, Items } from '~/components/Table/styles';
 import { Modal } from '~/components/Modal/Action/styles';
 import Confirmation from '~/components/Modal/Confirmation';
 import { EmptyList, Edit, Delete, ActionItem } from './styles';
+import Pagination from '~/components/Pagination';
 
 export default function Recipient() {
   const dispatch = useDispatch();
@@ -20,7 +21,7 @@ export default function Recipient() {
   const [recipientId, setRecipientId] = useState('');
   const [selectedId, setSelectedId] = useState(0);
 
-  const recipients = useSelector(state => state.recipient.recipients);
+  const { recipients, total } = useSelector(state => state.recipient);
 
   useEffect(() => {
     dispatch(getRecipientsRequest());
@@ -45,6 +46,10 @@ export default function Recipient() {
 
   function handleGetRecipient(name) {
     dispatch(getRecipientsRequest(name));
+  }
+
+  function getRecipients(page) {
+    dispatch(getRecipientsRequest(null, page));
   }
 
   return (
@@ -82,7 +87,7 @@ export default function Recipient() {
           </tr>
         </thead>
         <tbody>
-          {recipients.length > 0 ? (
+          {recipients && recipients.length > 0 ? (
             recipients.map(recipient => (
               <tr key={recipient.id}>
                 <td># {recipient.id}</td>
@@ -129,6 +134,9 @@ export default function Recipient() {
           )}
         </tbody>
       </Items>
+      {recipients && recipients.length > 0 && (
+        <Pagination loadItems={getRecipients} itemsLenght={total} />
+      )}
     </Table>
   );
 }
