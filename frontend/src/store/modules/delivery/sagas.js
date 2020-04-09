@@ -58,6 +58,7 @@ export function* saveDeliveryRequest({ payload }) {
     yield put(saveDeliverySuccess(response.data));
 
     history.push('/delivery');
+    toast.success('Product created with success');
   } catch (err) {
     toast.error('Error to save delivery.');
   }
@@ -76,6 +77,7 @@ export function* updateDeliveryRequest({ payload }) {
     yield put(updateDeliverySuccess(response.data));
 
     history.push('/delivery');
+    toast.success('Product updated with success');
   } catch (err) {
     toast.error('Error to save delivery.');
   }

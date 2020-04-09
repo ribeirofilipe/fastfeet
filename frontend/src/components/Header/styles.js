@@ -20,7 +20,8 @@ export const Content = styled.div`
   }
 
   nav {
-    width: 100%;
+    width: 70%;
+    margin-right: auto;
 
     ul {
       display: flex;
@@ -47,6 +48,7 @@ export const Content = styled.div`
     align-items: center;
   }
 `;
+
 export const Profile = styled.div`
   display: flex;
   margin-left: 20px;
@@ -56,17 +58,19 @@ export const Profile = styled.div`
   div {
     text-align: right;
     margin-right: 10px;
+    width: 100%;
 
     strong {
       display: block;
       color: #333;
+      font-size: 16px;
     }
 
     a {
       display: block;
-      margin-top: 2px;
-      font-size: 12px;
-      color: #999;
+      margin-top: 4px;
+      font-size: 14px;
+      color: red;
     }
   }
 

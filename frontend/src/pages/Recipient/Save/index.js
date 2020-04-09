@@ -89,6 +89,7 @@ export default function RecipientSave({ location }) {
           <InputDiv width={33}>
             <label>CPF</label>
             <Input
+              disabled={!!id}
               mask="999.999.999-99"
               type="text"
               onChange={e => setCpf(e.target.value)}

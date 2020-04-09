@@ -15,10 +15,10 @@ export default function SaveContainer({ route, title, action }) {
           <IoIosArrowBack size={20} />
           <p>VOLTAR</p>
         </Link>
-        <button onClick={action}>
+        <Link style={{ backgroundColor: '#7159c1' }} onClick={action}>
           <MdDone size={20} />
           <p>SALVAR</p>
-        </button>
+        </Link>
       </div>
     </Container>
   );

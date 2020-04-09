@@ -82,15 +82,9 @@ export default function Header() {
             <div>
               <strong>Filipe Ribeiro</strong>
               <Link to="/" onClick={handleSignOut}>
-                Sair
+                Sair do sistema
               </Link>
             </div>
-            <img
-              src={
-                'https://api.adorable.io/avatars/54/abott@adorable.pngCopy to Clipboard'
-              }
-              alt=""
-            />
           </Profile>
         </aside>
       </Content>

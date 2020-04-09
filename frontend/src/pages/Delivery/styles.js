@@ -20,6 +20,7 @@ export const Canceled = styled.span`
   }
 
   p {
+    margin: 0;
     font-weight: bold;
   }
 `;
@@ -42,6 +43,7 @@ export const Deliveried = styled.span`
   }
 
   p {
+    margin: 0;
     font-weight: bold;
   }
 `;
@@ -64,6 +66,7 @@ export const Withdrawal = styled.span`
   }
 
   p {
+    margin: 0;
     font-weight: bold;
   }
 `;
@@ -71,6 +74,7 @@ export const Withdrawal = styled.span`
 export const Pending = styled.span`
   display: flex;
   justify-content: center;
+  align-items: center;
 
   width: 65%;
   color: #c1bc35;
@@ -88,6 +92,7 @@ export const Pending = styled.span`
 
   p {
     font-weight: bold;
+    margin: 0;
   }
 `;
 

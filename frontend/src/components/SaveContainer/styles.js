@@ -12,6 +12,7 @@ export const Container = styled.div`
     font-size: 28px;
     font-weight: bold;
     color: #444444;
+    margin: 0;
   }
 
   div {
@@ -19,42 +20,25 @@ export const Container = styled.div`
     align-items: center;
     text-decoration: none;
 
-    a,
-    button {
+    a {
       display: flex;
       align-items: center;
+      justify-content: center;
 
-      height: 50px;
+      text-decoration: none;
+      margin-right: 20px;
+      padding: 0 25px;
+
+      background: ${props => (props.save ? '#7158c1' : '#cccccc')};
+      height: 45px;
       color: #fff;
       border-radius: 4px;
       font-weight: bold;
       font-size: 16px;
-      p {
-        margin-left: 8px;
-        margin-top: 8px;
-      }
-    }
-
-    a {
-      display: flex;
-      align-items: center;
 
       p {
-        margin-top: 15px;
+        margin: auto;
       }
-
-      margin-right: 20px;
-      background: #cccccc;
-      padding: 0 25px;
-    }
-
-    button {
-      display: flex;
-      align-items: center;
-
-      border: 1px solid #7d40e7;
-      background: #7d40e7;
-      padding: 7px 25px;
     }
   }
 `;

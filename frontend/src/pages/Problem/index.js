@@ -66,7 +66,9 @@ export default function Problem() {
         handleSetVisible={setIsVisible}
       />
 
-      <Info setOpen={setOpen} open={open} content={<ModalInfo info={info} />} />
+      <Info setOpen={setOpen} open={open}>
+        <ModalInfo info={info} />
+      </Info>
 
       <Items>
         <thead>

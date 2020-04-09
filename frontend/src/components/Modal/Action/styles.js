@@ -5,6 +5,7 @@ export const Modal = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  z-index: 1;
 
   position: absolute;
   width: 160px;
@@ -50,13 +51,13 @@ export const Modal = styled.div`
     }
 
     span {
-      margin-left: 10px;
-      margin-right: 10px;
+      margin: 0 10px 0 10px;
     }
 
     p {
       transition: 0.7s;
       color: #999999;
+      margin: 0;
     }
   }
 `;

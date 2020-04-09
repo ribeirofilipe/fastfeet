@@ -55,6 +55,7 @@ export function* saveDeliverymenRequest({ payload }) {
     yield put(saveDeliverymenSuccess(response.data));
 
     history.push('/deliveryman');
+    toast.success('Deliveryman created with success.');
   } catch (err) {
     toast.error('Error to save deliverymen.');
   }
@@ -72,6 +73,7 @@ export function* updateDeliverymenRequest({ payload }) {
     yield put(updateDeliverymenSuccess(response.data));
 
     history.push('/deliveryman');
+    toast.success('Deliveryman updated with success.');
   } catch (err) {
     toast.error('Error to save deliverymen.');
   }
