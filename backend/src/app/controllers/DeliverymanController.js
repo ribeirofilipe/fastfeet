@@ -54,6 +54,7 @@ class DeliverymanController {
 
   async index(req, res) {
     const { name } = req.query;
+    const { page } = req.body;
 
     const query = name ? {
       name : {
@@ -61,7 +62,9 @@ class DeliverymanController {
       }
     } : null;
 
-    const deliverymans = await Deliveryman.findAll({
+    const total = await Deliveryman.count();
+
+    const deliverymen = await Deliveryman.findAll({
       where: query,
       include: [
         {
@@ -70,9 +73,15 @@ class DeliverymanController {
           attributes: ['name', 'path', 'url'],
         },
       ],
+      order: [['id', 'ASC']],
+      limit: 5,
+      offset: (page - 1) * 5,
     });
 
-    return res.json(deliverymans);
+    return res.json({
+      deliverymen,
+      total
+    });
   }
 
   async show(req, res) {

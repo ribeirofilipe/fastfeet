@@ -9,13 +9,13 @@ class DeliveryProblemController {
   async index(req, res) {
     const deliveryProblems = await DeliveryProblem.findAll({
       include: [{
-      model: Delivery,
-      as: 'delivery',
-      where: {
-        canceled_at: null
-      }
-    }]
-  })
+        model: Delivery,
+        as: 'delivery',
+        where: {
+          canceled_at: null
+        }
+      }]
+    })
 
     return res.json(deliveryProblems);
   }

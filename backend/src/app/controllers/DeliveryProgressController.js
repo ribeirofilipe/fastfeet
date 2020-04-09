@@ -1,7 +1,6 @@
 import { Op } from 'sequelize';
 import { isBefore, parseISO } from 'date-fns';
 import Delivery from '../models/Delivery';
-import File from '../models/File';
 
 class DeliveryProgressController {
   async deliveried(req, res) {
@@ -53,6 +52,8 @@ class DeliveryProgressController {
       return res.status(400).json({ error: '5 Orders day limit hit'})
     };
 
+    order.start_date = start_date;
+
     await Delivery.update({ start_date }, { where: { id } });
 
     return res.json(order);
@@ -88,9 +89,7 @@ class DeliveryProgressController {
 
     order = await order.update({ end_date, signature_id }, { where: { id } });
 
-    return res.json({
-      data: order
-    });
+    return res.json(order);
   }
 
 }

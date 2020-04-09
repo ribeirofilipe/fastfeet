@@ -1,5 +1,6 @@
 import { Op } from 'sequelize';
 import Delivery from '../models/Delivery';
+import DeliveryProblem from '../models/DeliveryProblem';
 import Recipient from '../models/Recipient';
 import Deliveryman from '../models/Deliveryman';
 
@@ -39,16 +40,19 @@ class DeliveryController {
     return res.json(order);
   }
 
-
   async index(req, res) {
     const { product } = req.query;
+    const { withProblem, page } = req.body;
 
     const query = product ?
     {
         product : {
           [Op.iLike]: `${product}%`,
-        }
+        },
+
     } : null;
+
+    const total = await Delivery.count();
 
     const orders = await Delivery.findAll({
       where: query,
@@ -61,10 +65,49 @@ class DeliveryController {
         model: Recipient,
         as: 'recipient',
         attributes: ['name', 'number', 'state', 'city', 'postal_code', 'street'],
+      }],
+      order: [['id', 'ASC']],
+      limit: 5,
+      offset: (page - 1) * 5,
+    });
+
+    if (withProblem) {
+      const problems = await DeliveryProblem.findAll().map(problem => problem.id);
+
+
+      const problemOrders = orders.filter(order =>
+          problems.includes(order.id));
+
+      return res.json(problemOrders);
+    }
+
+    return res.json({
+      orders,
+      total
+    });
+  }
+
+  async show(req, res) {
+    const { id } = req.params;
+
+    const order = await Delivery.findByPk(id, {
+      include: [{
+        model: Deliveryman,
+        as: 'deliveryman',
+        attributes: ['name'],
+      },
+      {
+        model: Recipient,
+        as: 'recipient',
+        attributes: ['name', 'number', 'state', 'city', 'postal_code', 'street'],
       }]
     });
 
-    return res.json(orders);
+    if (!order) {
+      return res.status(400).json({ error: 'Delivery not found.'});
+    }
+
+    return res.json(order);
   }
 
   async deliveries(req, res) {
