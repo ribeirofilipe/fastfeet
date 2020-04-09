@@ -35,7 +35,7 @@ export default function Problem() {
   }
 
   function handleOpenModal(id) {
-    if (id === deliveryId) {
+    if (id === selectedId) {
       setSelectedId(0);
     } else {
       setSelectedId(id);
@@ -75,29 +75,33 @@ export default function Problem() {
           {problems.length > 0 ? (
             problems.map(problem => (
               <tr key={problem.id}>
-                <td>{problem.order_id}</td>
+                <td># {problem.delivery_id}</td>
                 <td>{problem.description}</td>
                 <td>
                   {' '}
-                  <ActionItem onClick={() => handleOpenModal(problem.order_id)}>
+                  <ActionItem
+                    onClick={() => handleOpenModal(problem.delivery_id)}
+                  >
                     <FaEllipsisH />
                     <Modal
                       style={{
                         display:
-                          problem.order_id === selectedId ? 'block' : 'none',
+                          problem.delivery_id === selectedId ? 'block' : 'none',
                       }}
                     >
                       <div onClick={() => handleOpenInfo(problem.description)}>
                         <Edit>
                           <MdEdit />
                         </Edit>
-                        <p>Editar</p>
+                        <p>Visualizar</p>
                       </div>
-                      <div onClick={() => handleOpenDialog(problem.order_id)}>
+                      <div
+                        onClick={() => handleOpenDialog(problem.delivery_id)}
+                      >
                         <Delete>
                           <MdDeleteForever />
                         </Delete>
-                        <p>Deletar</p>
+                        <p>Cancelar encomenda</p>
                       </div>
                     </Modal>
                   </ActionItem>

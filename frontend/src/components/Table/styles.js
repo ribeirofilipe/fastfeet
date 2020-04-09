@@ -36,6 +36,7 @@ export const Table = styled.div`
       color: #fff;
       font-weight: bold;
       border-radius: 4px;
+      border: 1px solid #7d40e7;
 
       span {
         color: #fff;

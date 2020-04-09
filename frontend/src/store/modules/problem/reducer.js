@@ -24,7 +24,7 @@ export default function problem(state = INITIAL_STATE, action) {
       case '@problem/DELETE_SUCCESS': {
         draft.loading = false;
         draft.problems = draft.problems.filter(
-          problemValue => problemValue.order_id !== action.payload.id
+          problemValue => problemValue.delivery_id !== action.payload.id
         );
         break;
       }

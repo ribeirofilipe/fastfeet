@@ -7,7 +7,7 @@ import { cancelProblemSuccess, getProblemsSuccess } from './actions';
 
 export function* getProblemRequest() {
   try {
-    const response = yield call(api.get, 'delivery/problems');
+    const response = yield call(api.get, 'problems');
 
     yield put(getProblemsSuccess(response.data));
   } catch (err) {

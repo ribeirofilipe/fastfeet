@@ -13,6 +13,8 @@ import { Table, Items } from '~/components/Table/styles';
 import { EmptyList, Edit, Delete, ActionItem } from './styles';
 import { Modal } from '~/components/Modal/Action/styles';
 import Confirmation from '~/components/Modal/Confirmation';
+import NamePhoto from '~/components/NamePhoto';
+import Pagination from '~/components/Pagination';
 
 export default function Deliveryman() {
   const dispatch = useDispatch();
@@ -20,7 +22,7 @@ export default function Deliveryman() {
   const [isVisible, setIsVisible] = useState(false);
   const [deliverymanEmail, setDeliverymanEmail] = useState(0);
 
-  const deliverymen = useSelector(state => state.deliveryman.deliverymen);
+  const { deliverymen, total } = useSelector(state => state.deliveryman);
 
   useEffect(() => {
     dispatch(getDeliverymenRequest());
@@ -45,6 +47,10 @@ export default function Deliveryman() {
 
   function handleGetDeliverymen(name) {
     dispatch(getDeliverymenRequest(name));
+  }
+
+  function getDeliverymen(page) {
+    dispatch(getDeliverymenRequest(null, page));
   }
 
   return (
@@ -86,10 +92,14 @@ export default function Deliveryman() {
           {deliverymen.length > 0 ? (
             deliverymen.map(deliveryman => (
               <tr key={deliveryman.id}>
-                <td>{deliveryman.id}</td>
+                <td># {deliveryman.id}</td>
                 <td>
                   <span>
-                    <img src={deliveryman.avatar.url} alt="avatar" />
+                    {deliveryman.avatar ? (
+                      <img src={deliveryman.avatar.url} alt="avatar" />
+                    ) : (
+                      <NamePhoto name={deliveryman.name} />
+                    )}
                   </span>
                 </td>
                 <td>{deliveryman.name}</td>
@@ -137,6 +147,9 @@ export default function Deliveryman() {
           )}
         </tbody>
       </Items>
+      {deliverymen && deliverymen.length > 0 && (
+        <Pagination loadItems={getDeliverymen} itemsLenght={total} />
+      )}
     </Table>
   );
 }

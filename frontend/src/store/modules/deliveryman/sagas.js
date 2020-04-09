@@ -14,11 +14,14 @@ import {
 
 export function* getDeliverymenRequest({ payload }) {
   try {
-    const { deliveryman } = payload;
+    const { deliveryman, page } = payload;
 
     const response = yield call(
       api.post,
-      `deliverymen${deliveryman ? `?name=${deliveryman}` : ''}`
+      `deliverymen${deliveryman ? `?name=${deliveryman}` : ''}`,
+      {
+        page,
+      }
     );
 
     yield put(getDeliverymenSuccess(response.data));

@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import InputMask from 'react-input-mask';
 
 export const Form = styled.div`
   width: 69%;
@@ -16,7 +17,7 @@ export const Row = styled.div`
   flex-direction: row;
 `;
 
-export const Input = styled.input`
+export const Input = styled(InputMask)`
   margin-top: 12px;
   padding: 14px;
   font-size: 15px;

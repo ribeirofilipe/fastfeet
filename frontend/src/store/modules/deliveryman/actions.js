@@ -1,7 +1,7 @@
-export function getDeliverymenRequest(deliveryman) {
+export function getDeliverymenRequest(deliveryman, page = 1) {
   return {
     type: '@deliveryman/GET_REQUEST',
-    payload: { deliveryman },
+    payload: { deliveryman, page },
   };
 }
 

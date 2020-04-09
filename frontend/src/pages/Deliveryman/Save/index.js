@@ -4,15 +4,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import { MdInsertPhoto } from 'react-icons/md';
 import SaveContainer from '~/components/SaveContainer';
+import NamePhoto from '~/components/NamePhoto';
 
 import { Form, Row, InputDiv, Input } from '~/components/Form/styles';
 import { LabelThumbnail, Photo } from './styles';
 
-import {
-  saveDeliverymenRequest,
-  getDeliverymanRequest,
-  updateDeliverymenRequest,
-} from '~/store/modules/deliveryman/actions';
+import { getDeliverymanRequest } from '~/store/modules/deliveryman/actions';
 import { saveFileRequest } from '~/store/modules/file/actions';
 
 export default function DeliverymanSave({ location }) {
@@ -31,7 +28,7 @@ export default function DeliverymanSave({ location }) {
     if (deliveryman) {
       setName(deliveryman.name);
       setEmail(deliveryman.email);
-      setUrl(deliveryman.avatar.url);
+      setUrl(deliveryman.avatar && deliveryman.avatar.url);
     }
   }, [deliveryman]);
 
@@ -51,19 +48,11 @@ export default function DeliverymanSave({ location }) {
     return thumbnail ? URL.createObjectURL(thumbnail) : null;
   }, [thumbnail]);
 
-  const avatar_id = useSelector(state => state.file.avatar_id);
-
   function handleSubmit() {
     const data = new FormData();
     data.append('file', thumbnail);
 
-    dispatch(saveFileRequest(data));
-
-    const obj = { name, email, avatar_id };
-
-    return id
-      ? dispatch(updateDeliverymenRequest(obj))
-      : dispatch(saveDeliverymenRequest(obj));
+    dispatch(saveFileRequest(id, data, name, email));
   }
 
   return (
@@ -75,20 +64,36 @@ export default function DeliverymanSave({ location }) {
       />
       <Form>
         <Photo>
-          <LabelThumbnail
-            id="thumbnail"
-            style={{ backgroundImage: `url(${preview || url})` }}
-            thumbnail={thumbnail || url}
-          >
-            <input
-              type="file"
-              onChange={event => setThumbnail(event.target.files[0])}
+          {!id || deliveryman.avatar ? (
+            <LabelThumbnail
+              id="thumbnail"
+              style={{ backgroundImage: `url(${preview || url})` }}
+              thumbnail={thumbnail || url}
+            >
+              <input
+                type="file"
+                onChange={event => setThumbnail(event.target.files[0])}
+              />
+              <div>
+                <MdInsertPhoto size={60} color={'#DDDDDD'} />
+                <p>Adicionar foto</p>
+              </div>
+            </LabelThumbnail>
+          ) : (
+            <NamePhoto
+              name={deliveryman.name}
+              style={{
+                width: 220,
+                height: 220,
+                borderRadius: 110,
+                fontSize: 45,
+                border: '1px dashed #7159c1',
+              }}
+              textStyle={{
+                fontSize: 90,
+              }}
             />
-            <div>
-              <MdInsertPhoto size={60} color={'#DDDDDD'} />
-              <p>Adicionar foto</p>
-            </div>
-          </LabelThumbnail>
+          )}
         </Photo>
 
         <Row>

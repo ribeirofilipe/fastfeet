@@ -14,12 +14,17 @@ import {
 
 export function* getDeliveriesRequest({ payload }) {
   try {
-    const { product } = payload;
+    const { product, withProblem, page } = payload;
 
     const response = yield call(
       api.post,
-      `deliveries${product ? `?product=${product}` : ''}`
+      `deliveries${product ? `?product=${product}` : ''}`,
+      {
+        page,
+        withProblem,
+      }
     );
+
     yield put(getDeliveriesSuccess(response.data));
   } catch (err) {
     toast.error('Error to get products.');
@@ -44,7 +49,7 @@ export function* saveDeliveryRequest({ payload }) {
   try {
     const { product, recipient_id, deliveryman_id } = payload.product;
 
-    const response = yield call(api.post, 'order', {
+    const response = yield call(api.post, 'delivery', {
       product,
       recipient_id,
       deliveryman_id,
@@ -60,11 +65,12 @@ export function* saveDeliveryRequest({ payload }) {
 
 export function* updateDeliveryRequest({ payload }) {
   try {
-    const { id, recipient_id, deliveryman_id } = payload.product;
+    const { id, recipient_id, deliveryman_id, product } = payload.product;
 
-    const response = yield call(api.put, `order/${id}`, {
+    const response = yield call(api.put, `delivery/${id}`, {
       recipient_id,
       deliveryman_id,
+      product,
     });
 
     yield put(updateDeliverySuccess(response.data));
@@ -79,7 +85,7 @@ export function* getDeliveryRequest({ payload }) {
   try {
     const { id } = payload;
 
-    const response = yield call(api.get, `order/${id}`);
+    const response = yield call(api.get, `delivery/${id}`);
 
     yield put(getDeliverySuccess(response.data));
   } catch (err) {

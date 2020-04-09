@@ -4,16 +4,32 @@ import { toast } from 'react-toastify';
 import api from '~/services/api';
 
 import { saveFileSuccess } from './actions';
+import {
+  saveDeliverymenRequest,
+  updateDeliverymenRequest,
+} from '../deliveryman/actions';
 
 export function* saveFileRequest({ payload }) {
   try {
-    const { file } = payload;
+    const { id: deliverymanId, file, name, email } = payload;
 
     const response = yield call(api.post, 'files', file);
 
-    const { id } = response.data;
+    const { id: avatar_id } = response.data;
 
-    yield put(saveFileSuccess(id));
+    const deliveryman = {
+      name,
+      email,
+      avatar_id,
+    };
+
+    if (!deliverymanId) {
+      yield put(saveDeliverymenRequest(deliveryman));
+    } else {
+      yield put(updateDeliverymenRequest(deliveryman));
+    }
+
+    yield put(saveFileSuccess(avatar_id));
 
     toast.success('File saved with success!');
   } catch (err) {

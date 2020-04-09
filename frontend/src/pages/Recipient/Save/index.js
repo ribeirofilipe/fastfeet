@@ -89,6 +89,7 @@ export default function RecipientSave({ location }) {
           <InputDiv width={33}>
             <label>CPF</label>
             <Input
+              mask="999.999.999-99"
               type="text"
               onChange={e => setCpf(e.target.value)}
               value={cpf}
@@ -129,6 +130,7 @@ export default function RecipientSave({ location }) {
           <InputDiv>
             <label>Estado</label>
             <Input
+              mask="aa"
               type="text"
               onChange={e => setState(e.target.value)}
               value={state}
@@ -137,7 +139,7 @@ export default function RecipientSave({ location }) {
           <InputDiv>
             <label>CEP</label>
             <Input
-              type="text"
+              mask="99999-999"
               onChange={e => setPostalCode(e.target.value)}
               value={postal_code}
             />

@@ -3,6 +3,7 @@ import produce from 'immer';
 const INITIAL_STATE = {
   products: [],
   product: {},
+  total: 0,
   loading: false,
 };
 
@@ -15,7 +16,8 @@ export default function delivery(state = INITIAL_STATE, action) {
       }
       case '@delivery/GET_SUCCESS': {
         draft.loading = false;
-        draft.products = action.payload.products;
+        draft.products = action.payload.products.orders;
+        draft.total = action.payload.products.total;
         break;
       }
       case '@deliery/DELETE_REQUEST': {

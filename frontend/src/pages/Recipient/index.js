@@ -18,6 +18,7 @@ export default function Recipient() {
   const dispatch = useDispatch();
   const [isVisible, setIsVisible] = useState(false);
   const [recipientId, setRecipientId] = useState('');
+  const [selectedId, setSelectedId] = useState(0);
 
   const recipients = useSelector(state => state.recipient.recipients);
 
@@ -31,7 +32,11 @@ export default function Recipient() {
   }
 
   function handleOpenModal(id) {
-    setRecipientId(id);
+    if (id === selectedId) {
+      setSelectedId(0);
+    } else {
+      setSelectedId(id);
+    }
   }
 
   function handleDeleteRecipient(id) {
@@ -92,8 +97,7 @@ export default function Recipient() {
                     <FaEllipsisH />
                     <Modal
                       style={{
-                        display:
-                          recipient.id === recipientId ? 'block' : 'none',
+                        display: recipient.id === selectedId ? 'block' : 'none',
                       }}
                     >
                       <Link

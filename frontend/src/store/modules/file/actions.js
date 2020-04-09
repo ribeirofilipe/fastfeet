@@ -1,7 +1,7 @@
-export function saveFileRequest(file) {
+export function saveFileRequest(id, file, name, email) {
   return {
     type: '@file/SAVE_REQUEST',
-    payload: { file },
+    payload: { id, file, name, email },
   };
 }
 

@@ -3,6 +3,7 @@ import produce from 'immer';
 const INITIAL_STATE = {
   deliverymen: [],
   deliveryman: null,
+  total: 0,
   loading: false,
 };
 
@@ -15,7 +16,8 @@ export default function deliveryman(state = INITIAL_STATE, action) {
       }
       case '@deliveryman/GET_SUCCESS': {
         draft.loading = false;
-        draft.deliverymen = action.payload.deliverymen;
+        draft.deliverymen = action.payload.deliverymen.deliverymen;
+        draft.total = action.payload.deliverymen.total;
         break;
       }
       case '@deliveryman/GET_REQUEST_BY_ID': {

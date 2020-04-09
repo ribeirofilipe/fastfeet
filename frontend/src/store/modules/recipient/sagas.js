@@ -63,6 +63,7 @@ export function* saveRecipientRequest({ payload }) {
 
     yield put(saveRecipientSuccess(response.data));
 
+    toast.success('Deliveryman saved with success.');
     history.push('/recipient');
   } catch (err) {
     toast.error('Error to save deliverymen.');
@@ -91,6 +92,8 @@ export function* updateRecipientRequest({ payload }) {
     });
 
     yield put(updateRecipientSuccess(response.data));
+
+    toast.success('Deliveryman updated with success.');
 
     history.push('/recipient');
   } catch (err) {

@@ -43,6 +43,7 @@ export const Container = styled.div`
       display: flex;
       align-items: center;
 
+      border: 1px solid #7d40e7;
       background: #7d40e7;
       padding: 7px 25px;
     }

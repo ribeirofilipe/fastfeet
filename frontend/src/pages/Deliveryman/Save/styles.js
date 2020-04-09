@@ -1,13 +1,13 @@
 import styled from 'styled-components';
 
 export const Photo = styled.div`
-  width: 20%;
+  width: 25%;
   height: 250px;
   margin: auto;
 `;
 
 export const LabelThumbnail = styled.label`
-  width: 80%;
+  width: 65%;
   height: 200px;
   margin-top: 25px;
 

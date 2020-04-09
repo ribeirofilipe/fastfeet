@@ -6,8 +6,11 @@ import { MdEdit, MdDeleteForever } from 'react-icons/md';
 import { Table, Items } from '~/components/Table/styles';
 import { Modal } from '~/components/Modal/Action/styles';
 import Confirmation from '~/components/Modal/Confirmation';
+import Checkbox from '~/components/Checkbox';
 import Info from '~/components/Modal/Info';
 import ModalInfo from './Info';
+
+import Pagination from '~/components/Pagination';
 
 import {
   Canceled,
@@ -33,16 +36,17 @@ export default function Delivery() {
   const [productId, setProductId] = useState(0);
   const [open, setOpen] = useState(false);
   const [info, setInfo] = useState({});
+  const [withProblem, setWithProblem] = useState(false);
+  const [description, setDescription] = useState(false);
+  const [lengthProducts, setLengthProducts] = useState(0);
+
+  const { products, total } = useSelector(state => state.delivery);
 
   useEffect(() => {
     dispatch(getDeliveriesRequest());
   }, [dispatch]);
 
-  const products = useSelector(state => state.delivery.products);
-
-  function handleGetProducts(e) {
-    dispatch(getDeliveriesRequest(e));
-  }
+  useEffect(() => setLengthProducts(total), [total]);
 
   function handleDeleteProduct() {
     dispatch(deleteDeliverieRequest(productId));
@@ -64,6 +68,21 @@ export default function Delivery() {
   function handleOpenInfo(values) {
     setInfo(values);
     setOpen(true);
+  }
+
+  function getDeliveries(page) {
+    dispatch(getDeliveriesRequest(description, null, page));
+  }
+
+  function handleGetProblems() {
+    dispatch(getDeliveriesRequest(description, !withProblem));
+    setWithProblem(!withProblem);
+  }
+
+  function handleSetDeliveryDescription(e) {
+    setDescription(e);
+
+    dispatch(getDeliveriesRequest(e));
   }
 
   function handleGetStatus(product) {
@@ -101,7 +120,7 @@ export default function Delivery() {
       <span>Gerenciando encomendas</span>
       <div>
         <input
-          onChange={e => handleGetProducts(e.target.value)}
+          onChange={e => handleSetDeliveryDescription(e.target.value)}
           placeholder="Buscar por encomendas"
         ></input>
 
@@ -114,6 +133,8 @@ export default function Delivery() {
           </button>
         </Link>
       </div>
+
+      <Checkbox checked={withProblem} execute={handleGetProblems} />
       <Confirmation
         isVisible={isVisible}
         handleExecute={() => handleDeleteProduct(productId)}
@@ -135,7 +156,7 @@ export default function Delivery() {
           </tr>
         </thead>
         <tbody>
-          {products.length > 0 ? (
+          {products && products.length > 0 ? (
             products.map(product => (
               <tr key={product.id}>
                 <td># {product.id}</td>
@@ -207,6 +228,9 @@ export default function Delivery() {
           )}
         </tbody>
       </Items>
+      {products && products.length > 0 && (
+        <Pagination loadItems={getDeliveries} itemsLenght={lengthProducts} />
+      )}
     </Table>
   );
 }
