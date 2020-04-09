@@ -36,7 +36,7 @@ export default function DeliveryConfirm({ route }) {
   }
 
   async function handleSubmit() {
-    await registerFile(pictureUri, "assignature.jpg");
+    await registerFile(pictureUri, 'assignature.jpg');
 
     dispatch(sendDeliveryConfirmRequest(
       id,

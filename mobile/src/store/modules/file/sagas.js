@@ -7,17 +7,23 @@ import { sendFileSuccess } from './actions';
 
 export function* sendFile({ payload }) {
   try {
-    const { originalname, filename } = payload;
+    const { filename, originalname } = payload;
 
     const response = yield call(
       api.post,
       'files', {
-        originalname,
-        filename
+        filename,
+        originalname
       }
     );
 
     yield put(sendFileSuccess(response.data.id));
+
+    Alert.alert(
+      'Sucesso!',
+      'Entrega finalizada!'
+    );
+
   } catch (err) {
     Alert.alert(
       'Falha ao cadastrar nova imagem',

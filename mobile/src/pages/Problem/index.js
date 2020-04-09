@@ -13,22 +13,13 @@ import { getProblemsRequest } from '~/store/modules/problem/actions';
 export default function Problem({ route }) {
   const dispatch = useDispatch();
 
-  const [problems, setProblems] = useState([]);
-
   const { id, title } = route.params;
 
   useEffect(() => {
     dispatch(getProblemsRequest(id));
-
-    const newProblems = allProblems.map(problem => ({
-      ...problem,
-      created_at: format(parseISO(problem.createdAt), 'dd/MM/yyyy'),
-    }))
-
-    setProblems(newProblems);
   }, []);
 
-  const allProblems = useSelector(state => state.problem.problems);
+  const problems = useSelector(state => state.problem.problems);
 
   return (
     <>
