@@ -19,7 +19,7 @@ export const Problems = styled.View`
   background: #FFF;
   width: 350px;
 
-  flex-direction: row;
+  flex-direction: column;
   align-items: center;
   justify-content: space-between;
 
@@ -34,4 +34,5 @@ export const Description = styled.Text`
 export const Data = styled.Text`
   color: #C1C1C1;
   font-size: 16px;
+  margin-top: 10px;
 `;
