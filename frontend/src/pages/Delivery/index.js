@@ -43,6 +43,8 @@ export default function Delivery() {
 
   const { products, total } = useSelector(state => state.delivery);
 
+  const name = 'NO PHOTO';
+
   useEffect(() => {
     dispatch(getDeliveriesRequest());
   }, [dispatch]);
@@ -164,12 +166,13 @@ export default function Delivery() {
                 <td>{product.recipient && product.recipient.name}</td>
                 <td>
                   <span>
-                    {product.signature && product.signature.url ? (
-                      <img src={product.signature.url} alt="avatar" />
+                    {product.deliveryman.avatar &&
+                    product.deliveryman.avatar.url ? (
+                      <img src={product.deliveryman.avatar.url} alt="avatar" />
                     ) : (
-                      <NamePhoto name={'SEM FOTO'} />
+                      <NamePhoto name={name} />
                     )}
-                    {product.deliveryman && product.deliveryman.name}
+                    <p>{product.deliveryman && product.deliveryman.name}</p>
                   </span>
                 </td>
                 <td>{product.recipient && product.recipient.city}</td>

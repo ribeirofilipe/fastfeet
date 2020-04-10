@@ -82,7 +82,7 @@ export const Items = styled.table`
 
         span {
           display: flex;
-          align-items: center;
+          align-items: baseline;
           font-size: 16px;
           font-weight: normal;
 
@@ -91,6 +91,10 @@ export const Items = styled.table`
             width: 40px;
             height: 40px;
             border-radius: 50%;
+          }
+
+          p {
+            margin-left: 10px;
           }
         }
       }
