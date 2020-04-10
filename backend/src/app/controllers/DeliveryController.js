@@ -3,6 +3,7 @@ import Delivery from '../models/Delivery';
 import DeliveryProblem from '../models/DeliveryProblem';
 import Recipient from '../models/Recipient';
 import Deliveryman from '../models/Deliveryman';
+import File from '../models/File';
 
 class DeliveryController {
   async store(req, res) {
@@ -56,10 +57,16 @@ class DeliveryController {
 
     const orders = await Delivery.findAll({
       where: query,
-      include: [{
+      include: [
+      {
         model: Deliveryman,
         as: 'deliveryman',
         attributes: ['name'],
+      },
+      {
+        model: File,
+        as: 'signature',
+        attributes: ['id', 'url', 'path'],
       },
       {
         model: Recipient,

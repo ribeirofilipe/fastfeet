@@ -8,6 +8,7 @@ import { Modal } from '~/components/Modal/Action/styles';
 import Confirmation from '~/components/Modal/Confirmation';
 import Checkbox from '~/components/Checkbox';
 import Info from '~/components/Modal/Info';
+import NamePhoto from '~/components/NamePhoto';
 import ModalInfo from './Info';
 
 import Pagination from '~/components/Pagination';
@@ -163,10 +164,11 @@ export default function Delivery() {
                 <td>{product.recipient && product.recipient.name}</td>
                 <td>
                   <span>
-                    <img
-                      src="https://api.adorable.io/avatars/54/abott@adorable.pngCopy to Clipboard"
-                      alt="avatar"
-                    ></img>
+                    {product.signature && product.signature.url ? (
+                      <img src={product.signature.url} alt="avatar" />
+                    ) : (
+                      <NamePhoto name={'SEM FOTO'} />
+                    )}
                     {product.deliveryman && product.deliveryman.name}
                   </span>
                 </td>
